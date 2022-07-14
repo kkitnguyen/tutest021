@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mirrored from www.aksisweb.com/theme/fixed/layouts-1/ecommerce-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Jul 2021 09:02:43 GMT -->
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Quản lý cửa hàng</title>
+
+        <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+
+        <!-- Common Plugins -->
+        <link href="/assets/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		
+        <!-- DataTables -->
+        <link href="/assets/lib/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+        <link href="/assets/lib/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+
+        <!-- Custom Css-->
+        <link href="/assets/scss/style.css" rel="stylesheet">
+		
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+
+		<th:block th:insert="/admin/_topbar"></th:block>
+		<th:block th:insert="/admin/_nav"></th:block>
+
+        
+		<!-- ============================================================== -->
+		<!-- 						Content Start	 						-->
+		<!-- ============================================================== -->
+		
+        <div class="row page-header"></div>
+
+      <section class="main-content">
+
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="card">
+                   <div class="card-header card-default">
+                        Lời nhắn từ khách hàng
+                    </div>
+                      
+                      <div class="card-body">
+                              <table id="datatable1" class="table table-striped dt-responsive nowrap table-hover">
+                                  <thead>
+                                      <tr>
+                                          <th class="text-center">
+                                              <strong>STT</strong>
+                                          </th>
+                                          <th class="text-center">
+                                              <strong>Họ và tên</strong>
+                                          </th>
+                                          <th class="text-center">
+                                              <strong>Email</strong>
+                                          </th>
+                                          <th class="text-center">
+                                              <strong>Số điện thoại</strong>
+                                          </th>
+                                          <th class="text-center">
+                                            <strong>Lời nhắn</strong>
+                                          </th>
+                                          <th class="text-center">
+                                            <strong>Ngày gửi</strong>
+                                          </th>
+                                          <th class="text-center">
+                                              <strong>Action</strong>
+                                          </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr th:each="f, i : ${feedbacks}">
+                                          <td th:text="${i.count}">0001</td>
+                                          <td th:text="${f.fullname}"></td>
+                                          <td th:text="${f.email}"></td>
+                                          <td th:text="${f.phoneNumber}"></td>
+                                          <td th:text="${f.message}"></td>
+                                          <td th:text="${f.createdDate}"></td>
+                                          <td class="text-center">
+                                              <a th:onclick="'deleteItem(' + ${f.id} + ')'"
+                                                data-toggle="modal" data-target=".bs-example-modal-sm"
+                                                class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                                          </td>
+                                      </tr>
+                                      
+                                  </tbody>
+                              </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" 
+            id="delete"
+            aria-labelledby="mySmallModalLabel" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        Xác nhận xóa?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                        <a id="deleteButton"   type="button" class="btn btn-primary">Xóa</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function deleteItem(id){
+                var delBtn = document.getElementById('deleteButton');
+                delBtn.setAttribute('href', '/ttu-admin/feedback/delete/' + id);
+            }
+        </script>
+
+          <footer class="footer">
+              <span>Copyright &copy; 2018 FixedPlus</span>
+          </footer>
+
+
+      </section>
+      <!-- ============================================================== -->
+      <!-- 						Content End 	 						-->
+      <!-- ============================================================== -->
+
+
+
+        <!-- Common Plugins-->
+        <script src="/assets/lib/jquery/dist/jquery.min.js"></script>
+		<script src="/assets/lib/bootstrap/js/popper.min.js"></script>
+        <script src="/assets/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/assets/lib/pace/pace.min.js"></script>
+        <script src="/assets/lib/jasny-bootstrap/js/jasny-bootstrap.min.js"></script>
+        <script src="/assets/lib/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="/assets/lib/nano-scroll/jquery.nanoscroller.min.js"></script>
+        <script src="/assets/lib/metisMenu/metisMenu.min.js"></script>
+        <script src="/assets/js/custom.js"></script>
+		
+        <!-- Datatables-->
+        <script src="/assets/lib/datatables/jquery.dataTables.min.js"></script>
+        <script src="/assets/lib/datatables/dataTables.responsive.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#datatable1').dataTable();
+            });
+        </script>
+    </body>
+
+<!-- Mirrored from www.aksisweb.com/theme/fixed/layouts-1/ecommerce-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Jul 2021 09:02:43 GMT -->
+</html>

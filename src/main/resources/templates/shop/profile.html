@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Thông tin tài khoản</title>
+
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/shop-assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/style.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <!-- <div id="preloder">
+        <div class="loader"></div>
+    </div> -->
+
+    <script th:if="${message != null}">
+        alert("[[${message}]]");
+    </script>
+    <th:block th:insert="/shop/_header"></th:block>
+
+    <!-- Profile Section Begin -->
+    <section class="shop spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-3">
+                    <div class="shop__sidebar">
+                        <div class="sidebar__categories">
+                            <!-- <div class="section-title">
+                                <h4>---</h4>
+                            </div> -->
+                            <div class="categories__accordion">
+                                <div class="accordion" id="accordionExample">
+                                    <div class="card">
+                                        <div class="card-heading active">
+                                            <a href="/profile" >Thông tin cá nhân</a>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-heading active">
+                                            <a href="/profile/order" >Lịch sử đơn hàng</a>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-heading active">
+                                            <a href="/profile/change-password" >Đổi mật khẩu</a>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-9">
+                    <form action="/profile/update" class="checkout__form" method="post" th:object="${user}" th:if="${user != null}">
+                        <div class="row" >
+                            <div class="col">
+                                <h5>Thông tin tài khoản</h5>
+        
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="checkout__form__input">
+                                            <p>Họ và tên <span>*</span></p>
+                                            <input type="text" name="fullname" th:field="*{fullname}" placeholder="Họ và tên" required>
+                                        </div>
+
+                                        <div class="checkout__form__input">
+                                            <p>Email <span>*</span></p>
+                                            <input type="text" name="email" th:field="*{email}" placeholder="Email (dùng để đăng nhập)" required>
+                                        </div>    
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="checkout__form__input">
+                                            <p>Số điện thoại </p>
+                                            <input type="text" name="phoneNumber" th:field="*{phoneNumber}" placeholder="Số điện thoại">
+                                        </div>
+                
+                                        <div class="checkout__form__input">
+                                            <p>Địa chỉ </p>
+                                            <input type="text" name="address" th:field="*{address}" placeholder="Địa chỉ">
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <input type="submit" class="site-btn" value="Cập nhật">
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="row " th:if="${orders != null}">
+                        <h5 class="mb-2">Danh sách đơn hàng đã đặt</h5>
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-center"> STT </th>
+                                    <th class="text-center">Mã đơn</th>
+                                    <th class="text-center">Ngày đặt</th>
+                                    <th class="text-center">Trạng thái</th>
+                                    <th class="text-center">Tổng tiền </th>
+                                    <th class="text-center">Chi tiết</th>
+                                </tr>
+                            </thead>
+                            <tbody>   
+                                <tr th:each="order, i : ${orders}" >
+                                    <td th:text="${i.count}" class="text-center">0001</td>
+                                    <td th:text="${order.billCode}" class="text-center">TU220701182948</td>
+                                    <td th:text="${order.orderTime}" class="text-center">15/07/2018</td>
+                                    <td class="text-center">
+
+                                        <span value="0" th:if="${order.status == 0}">Chờ xác nhận</span>
+                                        <span value="1" th:if="${order.status == 1}">Đã xác nhận</span>
+                                        <span value="2" th:if="${order.status == 2}">Đang giao</span>
+                                        <span value="3" th:if="${order.status == 3}">Đã giao</span>
+                                        <span value="4" th:if="${order.status == 4}">Hủy</span>
+                                    </td>
+                                    <td th:text="${order.amount}" class="text-center">---</td>
+                                    <td class="text-center">
+                                        <a th:href="@{'/profile/order/detail/' + ${order.id}}" 
+                                            class="btn btn-sm btn-success"><i class="fa fa-search"></i></a>
+                                    </td>
+                                </tr>
+    
+                            </tbody>
+                        </table>  
+                    </div>
+
+                    <div th:if="${orderDetails != null}">
+                        <div class="row">
+                            <h5 class="mb-2">Chi tiết đơn hàng: [[${order.billCode}]]</h5>
+                            <div class="col-lg-12 mt-2 mb-4">
+                                <table >
+                                    <tbody>
+                                        <tr>
+                                            <td style="width: 175px;"> <b>Họ và tên: </b></td>
+                                            <td th:text="${order.fullname}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td> <b>Email: </b></td>
+                                            <td th:text="${order.email}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Số điện thoại:</b> </td>
+                                            <td th:text="${order.phoneNumber}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Địa chỉ: </b></td>
+                                            <td th:text="${order.address}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Chi chú: </b></td>
+                                            <td th:text="${order.note}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Thời gian đặt hàng: </b></td>
+                                            <td th:text="${order.orderTime}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Trạng thái: </b></td>
+                                            <td>
+                                                <span value="0" th:if="${order.status == 0}">Chờ xác nhận</span>
+                                                <span value="1" th:if="${order.status == 1}">Đã xác nhận</span>
+                                                <span value="2" th:if="${order.status == 2}">Đang giao</span>
+                                                <span value="3" th:if="${order.status == 3}">Đã giao</span>
+                                                <span value="4" th:if="${order.status == 4}">Hủy</span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+
+                        <div class="row">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center"> STT </th>
+                                        <th class="text-center">Tên sản phẩm</th>
+                                        <th class="text-center">Số lượng</th>
+                                        <th class="text-center">Đơn giá</th>
+                                        <th class="text-center">Thành tiền </th>
+                                    </tr>
+                                </thead>
+                                <tbody>   
+                                    <tr th:each="item, i : ${orderDetails}" >
+                                        <td th:text="${i.count}" class="text-center">0001</td>
+                                        <td th:text="${item.product.name}" ></td>
+                                        <td th:text="${item.quantity}" class="text-center"></td>
+                                        <td th:text="${item.price}" class="text-center">50.000đ</td>
+                                        <td th:text="${item.quantity * item.price}" class="text-center">---</td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-center"><strong>Tổng</strong></td>
+                                        <td class="text-center"> <strong th:text="${order.amount}">500.000</strong></td>
+                                    </tr>
+                                </tbody>
+                            </table>  
+                        </div>
+                        
+                    </div>
+
+
+                    <form action="/profile/change-password" class="checkout__form" method="post" th:if="${changePassword != null}">
+                        <div class="row">
+                            <div class="col">
+                                <h5>Đổi mật khẩu</h5>
+        
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="checkout__form__input">
+                                            <p>Mật khẩu cũ</p>
+                                            <input type="password" name="oldPassword" placeholder="Nhập mật khẩu cũ" required>
+                                        </div>   
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="checkout__form__input">
+                                            <p>Mật khẩu mới </p>
+                                            <input type="password" name="password" placeholder="Nhập mật khẩu mới" required>
+                                        </div>
+                
+                                        <div class="checkout__form__input">
+                                            <p>Nhập lại mật khẩu </p>
+                                            <input type="password" name="rePassword" placeholder="Nhập lại mật khẩu mới" required>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <input type="submit" class="site-btn" value="Thay đổi">
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- Profile Section End -->
+    
+
+
+    <th:block th:insert="/shop/_insta"></th:block>
+    <th:block th:insert="/shop/_footer"></th:block>
+
+<!-- Js Plugins -->
+<script src="/shop-assets/js/jquery-3.3.1.min.js"></script>
+<script src="/shop-assets/js/bootstrap.min.js"></script>
+<script src="/shop-assets/js/jquery.magnific-popup.min.js"></script>
+<script src="/shop-assets/js/jquery-ui.min.js"></script>
+<script src="/shop-assets/js/mixitup.min.js"></script>
+<script src="/shop-assets/js/jquery.countdown.min.js"></script>
+<script src="/shop-assets/js/jquery.slicknav.js"></script>
+<script src="/shop-assets/js/owl.carousel.min.js"></script>
+<script src="/shop-assets/js/jquery.nicescroll.min.js"></script>
+<script src="/shop-assets/js/main.js"></script>
+</body>
+
+</html>

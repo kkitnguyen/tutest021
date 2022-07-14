@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Đăng ký tài khoản - Tủ decor</title>
+
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/shop-assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/style.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <th:block th:insert="/shop/_header"></th:block>
+
+
+    <script th:if="${message != null}">
+        alert("[[${message}]]");
+    </script>
+
+    <!-- Register Section Begin -->
+    <section class="checkout spad" th:if="${success == null}">
+        <div class="container">
+            
+            <form action="/register" class="checkout__form" method="post" th:object="${user}">
+                <div class="row ">
+                    <div class="col-lg-2 col-md-2"></div>
+                    <div class="col-lg-8 col-md-8">
+                        <h5>Đăng ký tài khoản</h5>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="checkout__form__input">
+                                    <p>Email <span>*</span></p>
+                                    <input type="text" name="email" th:field="*{email}" placeholder="Email (dùng để đăng nhập)" required>
+                                </div>
+        
+                                <div class="checkout__form__input">
+                                    <p>Password <span>*</span></p>
+                                    <input type="password" name="password" placeholder="Nhập mật khẩu" required>
+                                </div>
+                                <div class="checkout__form__input">
+                                    <p>Nhập lại Password <span>*</span></p>
+                                    <input type="password" name="rePassword" placeholder="Nhập lại mật khẩu" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__form__input">
+                                    <p>Họ và tên <span>*</span></p>
+                                    <input type="text" name="fullname" th:field="*{fullname}" placeholder="Họ và tên" required>
+                                </div>
+
+                                <div class="checkout__form__input">
+                                    <p>Số điện thoại </p>
+                                    <input type="text" name="phoneNumber" th:field="*{phoneNumber}" placeholder="Số điện thoại">
+                                </div>
+        
+                                <div class="checkout__form__input">
+                                    <p>Địa chỉ </p>
+                                    <input type="text" name="address" th:field="*{address}" placeholder="Địa chỉ">
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="submit" class="site-btn" value="Đăng ký">
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </section>
+    <!-- Register Section End -->
+
+    <!-- Alert Section Begin -->
+    <section class="checkout spad" th:if="${success}">
+        <div class="container">
+
+                <div class="row ">
+                    <div class="col-lg-2 col-md-2"></div>
+                    <div class="col-lg-8 col-md-8">
+                        <h5>Đăng ký tài khoản thành công.</h5>
+                        <h5><a href="/login">Đăng nhập</a></h5>
+                    </div>
+
+                </div>
+
+        </div>
+    </section>
+    <!-- Alert Section End -->
+
+    <th:block th:insert="/shop/_insta"></th:block>
+    <th:block th:insert="/shop/_footer"></th:block>
+
+<!-- Js Plugins -->
+<script src="/shop-assets/js/jquery-3.3.1.min.js"></script>
+<script src="/shop-assets/js/bootstrap.min.js"></script>
+<script src="/shop-assets/js/jquery.magnific-popup.min.js"></script>
+<script src="/shop-assets/js/jquery-ui.min.js"></script>
+<script src="/shop-assets/js/mixitup.min.js"></script>
+<script src="/shop-assets/js/jquery.countdown.min.js"></script>
+<script src="/shop-assets/js/jquery.slicknav.js"></script>
+<script src="/shop-assets/js/owl.carousel.min.js"></script>
+<script src="/shop-assets/js/jquery.nicescroll.min.js"></script>
+<script src="/shop-assets/js/main.js"></script>
+</body>
+
+</html>
