@@ -1,0 +1,51 @@
+package com.ttudecor.utils;
+
+import java.security.MessageDigest;
+import java.util.Arrays;
+import java.util.Base64;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
+public class EncryptionUtils {
+	
+	public static String encrypt(String myKey, String data) {
+		try {
+            MessageDigest sha = MessageDigest.getInstance("SHA-1");
+            byte[] key = myKey.getBytes("UTF-8");
+            key = sha.digest(key);
+            
+            key = Arrays.copyOf(key, 16);
+            SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
+            
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            
+            return Base64.getEncoder().encodeToString(cipher.doFinal(data.getBytes("UTF-8")));
+		} catch (Exception e) {
+            System.out.println(e.toString());
+		}
+		
+		return null;
+	}
+	
+	public static String dencrypt(String myKey, String encryptedData) {
+		try {
+            MessageDigest sha = MessageDigest.getInstance("SHA-1");
+            byte[] key = myKey.getBytes("UTF-8");
+            key = sha.digest(key);
+            
+            key = Arrays.copyOf(key, 16);
+            SecretKeySpec secretKey = new SecretKeySpec(key, "AES");
+            
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
+            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            
+            return new String(cipher.doFinal(Base64.getDecoder().decode(encryptedData)));
+      } catch (Exception e) {
+            System.out.println(e.toString());
+      }
+      return null;
+	}
+	
+}

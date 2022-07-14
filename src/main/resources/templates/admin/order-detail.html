@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mirrored from www.aksisweb.com/theme/fixed/layouts-1/ecommerce-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Jul 2021 09:02:43 GMT -->
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Quản lý cửa hàng</title>
+
+        <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+
+        <!-- Common Plugins -->
+        <link href="/assets/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom Css-->
+        <link href="/assets/scss/style.css" rel="stylesheet">
+		
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+
+		<th:block th:insert="/admin/_topbar"></th:block>
+		<th:block th:insert="/admin/_nav"></th:block>
+
+        
+        <!-- ============================================================== -->
+		<!-- 						Content Start	 						-->
+		<!-- ============================================================== -->
+		
+        <div class="row page-header"></div>
+         
+      <section class="main-content">
+
+        <div class="alert bg-success alert-dismissible " role="alert" th:if="${message != null }"> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
+            <strong>Success!</strong> <span th:text="${message}"></span>
+        </div>
+
+        
+          <div class="row">
+              <div class="col">
+                  <div class="card">
+                      <div class="card-header card-default">
+                          Chi tiết đơn hàng: [[${order.billCode}]]
+                          <p class="text-muted">Xem thông tin chi tiết đơn hàng và quản lý trạng thái đơn hàng</p>
+                      </div>
+                      <div class="card-body">
+                          
+                          <form method="post" action="/ttu-admin/order-manager/detail/update" 
+                            th:object="${order}" class="form-horizontal">
+                            <div class="row">
+                                <input type="hidden" th:field="*{id}">
+                                <input type="hidden" th:field="*{billCode}">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Họ và tên</label>
+                                        <input type="text" name="fullname" th:field="*{fullname}"
+                                        placeholder="New product name" class="form-control form-control-rounded" readonly>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <div class="form-group">
+                                                <label>Email</label>
+                                                <input type="text" name="email" th:field="*{email}"
+                                                  placeholder="New product name" class="form-control form-control-rounded" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <div class="form-group">
+                                                <label>Số điện thoại</label>
+                                                <input type="text" name="phoneNumber" th:field="*{phoneNumber}"
+                                                  placeholder="New product name" class="form-control form-control-rounded" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Địa chỉ</label>
+                                        <input type="text" name="address" th:field="*{address}"
+                                            class="form-control form-control-rounded" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Thời gian đặt hàng</label>
+                                        <input type="date" name="note" th:field="*{orderTime}"
+                                            class="form-control form-control-rounded" readonly>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>Ghi chú</label>
+                                        <input type="text" name="note" th:field="*{note}"
+                                            class="form-control form-control-rounded" readonly>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label>Trạng thái</label>
+                                        <select th:field="*{status}" id="" class="form-control">
+
+                                            <option value="0" th:selected="${order.status == 0}" 
+                                                class=" label-default">Chờ xác nhận</option>
+                                            <option value="1" th:selected="${order.status == 1}"
+                                                class=" label-warning">Đã xác nhận</option>
+                                            <option value="2" th:selected="${order.status == 2}"
+                                                class=" label-info">Đang giao</option>
+                                            <option value="3" th:selected="${order.status == 3}"
+                                                class=" label-success">Đã giao</option>
+                                            <option value="4" th:selected="${order.status == 4}"
+                                                class=" label-danger">Hủy</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <table class="table table-striped dt-responsive nowrap table-hover">
+                                    <thead>
+                                        <th>STT</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>SL</th>
+                                        <th>Đơn giá</th>
+                                        <th>Thành tiền</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="item, i : ${orderDetails}">
+                                            <td th:text="${i.count}"></td>
+                                            <td th:text="${item.product.name}"></td>
+                                            <td th:text="${item.quantity}"></td>
+                                            <td th:text="${item.price}"></td>
+                                            <td th:text="${item.quantity * item.price}"></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td> <strong th:text="${order.amount}">500.000</strong></td>
+                                        </tr>
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-success btn-icon"><i class="fa fa-floppy-o "></i>Cập nhật</button>
+                            <a href="/ttu-admin/order-manager/" class="btn btn-warning btn-icon"><i class="fa fa-reply"></i>Quay lại</a>	
+                                                
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          
+
+          <footer class="footer">
+              <span>Copyright &copy; 2018 FixedPlus</span>
+          </footer>
+
+
+      </section>
+      <!-- ============================================================== -->
+      <!-- 						Content Start	 						-->
+      <!-- ============================================================== -->
+
+
+
+        <!-- Common Plugins-->
+        <script src="/assets/lib/jquery/dist/jquery.min.js"></script>
+		<script src="/assets/lib/bootstrap/js/popper.min.js"></script>
+        <script src="/assets/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/assets/lib/pace/pace.min.js"></script>
+        <script src="/assets/lib/jasny-bootstrap/js/jasny-bootstrap.min.js"></script>
+        <script src="/assets/lib/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="/assets/lib/nano-scroll/jquery.nanoscroller.min.js"></script>
+        <script src="/assets/lib/metisMenu/metisMenu.min.js"></script>
+        <script src="/assets/js/custom.js"></script>
+		
+        
+    </body>
+
+<!-- Mirrored from www.aksisweb.com/theme/fixed/layouts-1/ecommerce-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Jul 2021 09:02:43 GMT -->
+</html>

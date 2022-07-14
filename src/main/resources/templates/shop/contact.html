@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Liên hệ - Tủ decor</title>
+
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/shop-assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/style.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <th:block th:insert="/shop/_header"></th:block>
+
+    <!-- Contact Section Begin -->
+    <section class="contact spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="contact__content">
+                        <div class="contact__address">
+                            <h5>Thông tin liên hệ</h5>
+                            <ul>
+                                <li>
+                                    <h6><i class="fa fa-map-marker"></i> Địa chỉ</h6>
+                                    <p>32/1 ngõ 236 Khương Đình, phường Hạ Đình, Thanh Xuân, HN</p>
+                                </li>
+                                <li>
+                                    <h6><i class="fa fa-facebook"></i> Facebook</h6>
+                                    <p><a href="https://www.facebook.com/ttu.decor/">Tủ decor - Trang trí nhà xinh</a></p>
+                                </li>
+                                <li>
+                                    <h6><i class="fa fa-instagram"></i> Instagram</h6>
+                                    <p><a href="https://www.instagram.com/ttu.decor/">@ttu.decor</a></p>
+                                </li>
+                                <li>
+                                    <h6><i class="fa fa-phone"></i> Phone/Zalo</h6>
+                                    <p><span>036 325 1169</span></p>
+                                </li>
+                                <li>
+                                    <h6><i class="fa fa-envelope"></i> Email</h6>
+                                    <p>ttu.decor@gmail.com</p>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="contact__form">
+                        <h5>Yêu cầu hỗ trợ</h5>
+                        <form action="/contact" method="post">
+                            <input type="text" placeholder="Tên của bạn" name="fullname" required>
+                            <input type="text" placeholder="Địa chỉ email" name="email" required>
+                            <input type="text" placeholder="Số điện thoại" name="phoneNumber" required>
+                            <textarea placeholder="Lời nhắn" name="message"></textarea>
+                            <button type="submit" class="site-btn">Gửi</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section End -->
+
+    <script th:if="${message != null}">
+        alert("[[${message}]]");
+    </script>
+
+    <th:block th:insert="/shop/_insta"></th:block>
+    <th:block th:insert="/shop/_footer"></th:block>
+
+<!-- Js Plugins -->
+<script src="/shop-assets/js/jquery-3.3.1.min.js"></script>
+<script src="/shop-assets/js/bootstrap.min.js"></script>
+<script src="/shop-assets/js/jquery.magnific-popup.min.js"></script>
+<script src="/shop-assets/js/jquery-ui.min.js"></script>
+<script src="/shop-assets/js/mixitup.min.js"></script>
+<script src="/shop-assets/js/jquery.countdown.min.js"></script>
+<script src="/shop-assets/js/jquery.slicknav.js"></script>
+<script src="/shop-assets/js/owl.carousel.min.js"></script>
+<script src="/shop-assets/js/jquery.nicescroll.min.js"></script>
+<script src="/shop-assets/js/main.js"></script>
+</body>
+
+</html>

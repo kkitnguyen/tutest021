@@ -1,0 +1,56 @@
+
+        <!-- ============================================================== -->
+		<!-- 						Navigation Start 						-->
+		<!-- ============================================================== -->
+        <div class="main-sidebar-nav default-navigation">
+            <div class="nano">
+                <div class="nano-content sidebar-nav">
+				
+					
+					
+                    <ul class="metisMenu nav flex-column" id="menu">
+                        <li class="nav-heading"><span>Quản lý cửa hàng</span></li>
+						<li class="nav-item" th:classappend="${dashboard } ? 'active'"><a class="nav-link" href="/ttu-admin/">
+                            <i class="fa fa-home"></i> <span class="toggle-none">Dashboard </a>
+                        </li>						
+                        <li class="nav-item" th:classappend="${categoryManager } ? 'active'">
+                            <a class="nav-link" href="/ttu-admin/category-manager">
+                            <i class="fa fa-th-large"></i> DANH MỤC</a>
+                        </li>
+						 <li class="nav-item" th:classappend="${productManager } ? 'active'">
+                            <a class="nav-link"  href="javascript: void(0);" aria-expanded="false"><i class="fa fa-codepen"></i> 
+                                <span class="toggle-none">SẢN PHẨM <span class="fa arrow"></span></span></a>
+                            <ul class="nav-second-level nav flex-column sub-menu" aria-expanded="false">
+								<li class="nav-item"><a class="nav-link" href="/ttu-admin/product-manager">Danh sách sản phẩm</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/ttu-admin/product-manager/add">Thêm sản phẩm mới</a></li>
+                            </ul>
+                        </li>
+						<li class="nav-item" th:classappend="${orderManager } ? 'active'">
+                            <a class="nav-link" href="/ttu-admin/order-manager"><i class="fa fa-shopping-cart"></i>
+                                <span class="toggle-none">ĐƠN HÀNG</a>
+                        </li>
+                        <li class="nav-heading"><span>Quản lý người dùng</span></li>
+
+                        <li class="nav-item" th:classappend="${userManager } ? 'active'">
+                            <a  class="nav-link" href="javascript: void(0);" aria-expanded="false"><i class="fa fa-users"></i> 
+                                <span class="toggle-none">Tài khoản <span class="fa arrow"></span></span></a>
+                            <ul class="nav-second-level nav flex-column sub-menu" aria-expanded="false">
+								<li class="nav-item"><a class="nav-link" href="/ttu-admin/account-manager/">Danh sách tài khoản</a></li>
+								<li class="nav-item"><a class="nav-link" href="/ttu-admin/account-manager/add">Thêm tài khoản mới</a></li>
+                            </ul>
+                        </li>						
+                        <li class="nav-item" th:classappend="${feedbackPage } ? 'active'">
+                            <a class="nav-link" href="/ttu-admin/feedback" ><i class="fa fa-envelope-open"></i>  
+                                <span class="toggle-none">Feedback</a>
+                        </li>
+                       
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+		<!-- 						Navigation End	 						-->
+		<!-- ============================================================== -->
+
+		

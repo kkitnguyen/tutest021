@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mirrored from www.aksisweb.com/theme/fixed/layouts-1/ecommerce-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Jul 2021 09:02:43 GMT -->
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Quản lý cửa hàng</title>
+
+        <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+
+        <!-- Common Plugins -->
+        <link href="/assets/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	
+        <!-- Custom Css-->
+        <link href="/assets/scss/style.css" rel="stylesheet">
+		
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+
+		<th:block th:insert="/admin/_topbar"></th:block>
+		<th:block th:insert="/admin/_nav"></th:block>
+
+        
+		<!-- ============================================================== -->
+		<!-- 						Content Start	 						-->
+		<!-- ============================================================== -->
+		
+        <div class="row page-header"></div>
+
+        <section class="main-content">
+			<div class="alert bg-success alert-dismissible " role="alert" th:if="${message != null}"> 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button> 
+				<strong th:text="${message}"></strong>
+			</div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+					 <div class="card-header card-default">
+							
+							Sửa danh mục sản phẩm
+                        </div>
+						
+                        <div class="card-body">
+                            <form role="form" th:action="@{/ttu-admin/category-manager/edit}" method="post" th:object="${category}">
+								<div class="row">
+									<div class="col">
+                                        <div class="form-group">
+                                            <label>ID</label>
+											<input type="text" class="form-control" th:field="*{id}" readonly>
+										</div>
+										<div class="form-group">
+                                            <label>Tên danh mục</label>
+											<input type="text" class="form-control" placeholder="Tên danh mục" th:field="*{name}">
+										</div>
+									</div>
+									
+									
+								</div>
+			
+								<div class="clearfix">
+                                    <a href="/ttu-admin/category-manager" class="btn btn-secondary">Quay lại</a>
+									<button type="submit" class="btn btn-primary">Cập nhật</button>
+								</div>
+							</form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		
+			
+
+            <footer class="footer">
+                <span>Copyright &copy; 2018 FixedPlus</span>
+            </footer>
+
+
+        </section>
+        <!-- ============================================================== -->
+		<!-- 						Content End 	 						-->
+		<!-- ============================================================== -->
+
+
+
+        <!-- Common Plugins-->
+        <script src="/assets/lib/jquery/dist/jquery.min.js"></script>
+		<script src="/assets/lib/bootstrap/js/popper.min.js"></script>
+        <script src="/assets/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/assets/lib/pace/pace.min.js"></script>
+        <script src="/assets/lib/jasny-bootstrap/js/jasny-bootstrap.min.js"></script>
+        <script src="/assets/lib/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="/assets/lib/nano-scroll/jquery.nanoscroller.min.js"></script>
+        <script src="/assets/lib/metisMenu/metisMenu.min.js"></script>
+        <script src="/assets/js/custom.js"></script>
+		
+       
+    </body>
+
+<!-- Mirrored from www.aksisweb.com/theme/fixed/layouts-1/ecommerce-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Jul 2021 09:02:43 GMT -->
+</html>

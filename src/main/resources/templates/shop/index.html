@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tủ decor - Trang trí nhà xinh</title>
+
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/shop-assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/style.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <th:block th:insert="/shop/_header"></th:block>
+
+    <!-- Categories Section Begin -->
+    <section class="categories">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6 p-0">
+                    <div class="categories__item categories__large__item set-bg"
+                    data-setbg="/shop-assets/img/categories/category-1.jpg">
+                    <div class="categories__text">
+                        <h1>ttu.decor</h1>
+                        <p>Chào bạn! Chúng mình là ttu.decor.</p>
+                        <a href="#">About us</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                        <div class="categories__item set-bg" data-setbg="/shop-assets/img/categories/category-2.jpg">
+                            <div class="categories__text">
+                                <h4>In ảnh</h4>
+                                <p>358 items</p>
+                                <a href="/shop/in-anh-theo-yeu-cau-c01">Xem ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                        <div class="categories__item set-bg" data-setbg="/shop-assets/img/categories/category-3.jpg">
+                            <div class="categories__text">
+                                <h4>Album, phụ kiện</h4>
+                                <p>273 items</p>
+                                <a href="/shop/album-anh-phu-kien-c02">Xem ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                        <div class="categories__item set-bg" data-setbg="/shop-assets/img/categories/category-4.jpg">
+                            <div class="categories__text">
+                                <h4>Đồ decor</h4>
+                                <p>159 items</p>
+                                <a href="/shop/do-dung-decor-c04">Xem ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-6 p-0">
+                        <div class="categories__item set-bg" data-setbg="/shop-assets/img/categories/category-5.jpg">
+                            <div class="categories__text">
+                                <h4>Postcard</h4>
+                                <p>792 items</p>
+                                <a href="/shop/postcard-c03">Xem ngay</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Categories Section End -->
+
+<!-- Product Section Begin -->
+<section class="product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4">
+                <div class="section-title">
+                    <h4>Sản phẩm</h4>
+                </div>
+            </div>
+            <!-- <div class="col-lg-8 col-md-8">
+                <ul class="filter__controls">
+                    <li th:classappend="${active == 0} ? active"><a href="/home/?fill=dfgdfgdfg">Tất cả</a></li>
+                    <li th:classappend="${active == 1} ? active">In ảnh</li>
+                    <li th:classappend="${active == 2} ? active">Đồ decor</li>
+                    <li th:classappend="${active == 3} ? active">Postcard</li>
+                    <li th:classappend="${active == 4} ? active">Album</li>
+                    <li th:classappend="${active == 5} ? active">Phụ kiện</li>
+                </ul>
+            </div> -->
+        </div>
+
+        <div class="row property__gallery" >
+            <div class="col-lg-3 col-md-4 col-sm-6" th:each="product : ${products}">
+                <div class="product__item">
+                    <div class="product__item__pic set-bg" th:data-setbg="${product.image}">
+                        <div class="label stockout" th:if="${product.quantity == 0}">Hết hàng</div>
+                        <div class="label new" th:if="${product.isnew}">New</div>
+                        <ul class="product__hover">
+                            <li><a th:href="${product.image}" class="image-popup"><span class="arrow_expand"></span></a></li>
+                            <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+                            <li><a th:href="@{'/cart/add/' + ${product.url}}"><span class="icon_bag_alt"></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="product__item__text">
+                        <h6><a th:href="@{'/product/' + ${product.url}}" th:text="${product.name}">Ảnh in 10x14 ép plastic</a></h6>
+                        <div class="rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                        </div>
+                                    
+                        <div class="product__price" th:if="${product.discountPrice} > 0"> 
+                            <span class="discount-price format-price" th:text="${product.discountPrice}" ></span>
+                            <span class="o-price format-price" th:text="${product.price}" > 39.000 đ</span>
+                        </div>
+                        <div class="product__price " th:if="${product.discountPrice} == 0">
+                            <span class="discount-price format-price" th:text="${product.price}" ></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</section>
+<!-- Product Section End -->
+
+<!-- Services Section Begin -->
+<section class="services spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="services__item">
+                    <i class="fa fa-car"></i>
+                    <h6>Free Shipping</h6>
+                    <p>Đơn hàng từ 250.000đ</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="services__item">
+                    <i class="fa fa-money"></i>
+                    <h6>Hoàn tiền 100%</h6>
+                    <p>Khi sản phẩm có vấn đề</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="services__item">
+                    <i class="fa fa-support"></i>
+                    <h6>An toàn</h6>
+                    <p>Cổng thanh toán bảo mật</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="services__item">
+                    <i class="fa fa-headphones"></i>
+                    <h6>Hỗ trợ nhiệt tình</h6>
+                    <p>Giải đáp tất cả thắc mắc</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Services Section End -->
+
+<!-- Banner Section Begin -->
+<!-- <section class="banner set-bg" data-setbg="/shop-assets/img/banner/banner-1.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-7 col-lg-8 m-auto">
+                <div class="banner__slider owl-carousel">
+                    <div class="banner__item">
+                        <div class="banner__text">
+                            <span>The Chloe Collection</span>
+                            <h1>The Project Jacket</h1>
+                            <a href="#">Xem ngay</a>
+                        </div>
+                    </div>
+                    <div class="banner__item">
+                        <div class="banner__text">
+                            <span>The Chloe Collection</span>
+                            <h1>The Project Jacket</h1>
+                            <a href="#">Xem ngay</a>
+                        </div>
+                    </div>
+                    <div class="banner__item">
+                        <div class="banner__text">
+                            <span>The Chloe Collection</span>
+                            <h1>The Project Jacket</h1>
+                            <a href="#">Xem ngay</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+<!-- Banner Section End -->
+
+<!-- Trend Section Begin -->
+<section class="trend spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="trend__content">
+                    <div class="section-title">
+                        <h4>Gợi Ý</h4>
+                    </div>
+                    <div class="trend__item" th:each="product : ${suggestProducts}">
+                        <a th:href="@{'/product/' + ${product.url}}">
+                            <div class="trend__item__pic">
+                                <img th:src="${product.image}" alt="" style="max-width: 90px;">
+                            </div>
+                            <div class="trend__item__text">
+                                <h6 th:text="${product.name}">Chain bucket bag</h6>
+                                <div class="rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+
+                                <div class="product__price" th:if="${product.discountPrice} > 0"> 
+                                    <span class="discount-price format-price" th:text="${product.discountPrice}" ></span>
+                                    <span class="o-price format-price" th:text="${product.price}" > 39.000 đ</span>
+                                </div>
+                                <div class="product__price " th:if="${product.discountPrice} == 0">
+                                    <span class="discount-price format-price" th:text="${product.price}" ></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="trend__content">
+                    <div class="section-title">
+                        <h4>Best seller</h4>
+                    </div>
+                    <div class="trend__item" th:each="product : ${bestSellerProducts}">
+                        <a th:href="@{'/product/' + ${product.url}}">
+                            <div class="trend__item__pic">
+                                <img th:src="${product.image}" alt="" style="max-width: 90px;">
+                            </div>
+                            <div class="trend__item__text">
+                                <h6 th:text="${product.name}">Chain bucket bag</h6>
+                                <div class="rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+
+                                <div class="product__price" th:if="${product.discountPrice} > 0"> 
+                                    <span class="discount-price format-price" th:text="${product.discountPrice}" ></span>
+                                    <span class="o-price format-price" th:text="${product.price}" > 39.000 đ</span>
+                                </div>
+                                <div class="product__price " th:if="${product.discountPrice} == 0">
+                                    <span class="discount-price format-price" th:text="${product.price}" ></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6">
+                <div class="trend__content">
+                    <div class="section-title">
+                        <h4>Sản Phẩm Mới</h4>
+                    </div>
+                    <div class="trend__item" th:each="product : ${newestProducts}">
+                        <a th:href="@{'/product/' + ${product.url}}">
+                            <div class="trend__item__pic">
+                                <img th:src="${product.image}" alt="" style="max-width: 90px;">
+                            </div>
+                            <div class="trend__item__text">
+                                <h6 th:text="${product.name}">Chain bucket bag</h6>
+                                <div class="rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                </div>
+
+                                <div class="product__price" th:if="${product.discountPrice} > 0"> 
+                                    <span class="discount-price format-price" th:text="${product.discountPrice}" ></span>
+                                    <span class="o-price format-price" th:text="${product.price}" > 39.000 đ</span>
+                                </div>
+                                <div class="product__price " th:if="${product.discountPrice} == 0">
+                                    <span class="discount-price format-price" th:text="${product.price}" ></span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Trend Section End -->
+
+
+    <th:block th:insert="/shop/_insta"></th:block>
+    <th:block th:insert="/shop/_footer"></th:block>
+
+<!-- Js Plugins -->
+<script src="/shop-assets/js/jquery-3.3.1.min.js"></script>
+<script src="/shop-assets/js/bootstrap.min.js"></script>
+<script src="/shop-assets/js/jquery.magnific-popup.min.js"></script>
+<script src="/shop-assets/js/jquery-ui.min.js"></script>
+<script src="/shop-assets/js/mixitup.min.js"></script>
+<script src="/shop-assets/js/jquery.countdown.min.js"></script>
+<script src="/shop-assets/js/jquery.slicknav.js"></script>
+<script src="/shop-assets/js/owl.carousel.min.js"></script>
+<script src="/shop-assets/js/jquery.nicescroll.min.js"></script>
+<script src="/shop-assets/js/main.js"></script>
+</body>
+
+</html>

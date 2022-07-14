@@ -1,0 +1,82 @@
+<div xmlns:th="http://www.thymeleaf.org">
+    <!-- Offcanvas Menu Begin -->
+    <div class="offcanvas-menu-overlay" ></div>
+    <div class="offcanvas-menu-wrapper">
+        <div class="offcanvas__close">+</div>
+        <ul class="offcanvas__widget">
+            <li><span class="icon_search search-switch"></span></li>
+            
+            <li><a href="/cart"><span class="icon_bag_alt"></span>
+                <div class="tip" id="cartAmount2"></div>
+            </a></li>
+        </ul>
+        <div class="offcanvas__logo">
+            <a href="/home"><img src="/shop-assets/img/logo-header.png" alt=""></a>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+        <div class="offcanvas__auth">
+            <a href="/login">Đăng nhập</a>
+            <a href="/register">Đăng ký</a>
+        </div>
+    </div>
+    <!-- Offcanvas Menu End -->
+
+    <!-- Header Section Begin -->
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-3 col-lg-2">
+                    <div class="header__logo">
+                        <a href="/home"><img src="/shop-assets/img/logo-header.png" alt=""></a>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-7">
+                    <nav class="header__menu">
+                        <ul>
+                            <li class="" th:classappend="${homePage } ? 'active'"><a href="/home">Home</a></li>
+                            <li ><a href="/shop">Danh mục</a>
+                                <ul class="dropdown">
+                                    <li><a href="/shop/in-anh-theo-yeu-cau-c01">In ảnh theo yêu cầu</a></li>
+                                    <li><a href="/shop/album-anh-phu-kien-c02">Dây đèn, album ảnh, phụ kiện</a></li>
+                                    <li><a href="/shop/do-dung-decor-c04">Đồ decor</a></li>
+                                    <li><a href="#">Decor bàn học, văn phòng</a></li>
+                                    <li><a href="#">Postcard</a></li>
+                                </ul>
+                            </li>
+                            <li th:classappend="${shopPage } ? 'active'"><a href="/shop">Cửa hàng</a></li>
+                            <li><a href="#">Mẹo decor</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li th:classappend="${contactPage } ? 'active'"><a href="/contact">Liên hệ</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-3">
+                    <div class="header__right">
+
+                        <div class="header__right__auth" th:if="${session.fullname == null} ">
+                            <a href="/login">Đăng nhập</a>
+                            <a href="/register">Đăng ký</a>
+                        </div>
+
+                        <div class="header__right__auth" th:if="${session.fullname != null}">
+                            <a href="/profile" th:text="${session.fullname}"></a>
+                            <a href="/logout">Đăng xuất</a>
+                        </div>
+
+                        <ul class="header__right__widget">
+                            <li><span class="icon_search search-switch"></span></li>
+
+                            <li><a href="/cart"><span class="icon_bag_alt"></span>
+                                <div class="tip" id="cartAmount"></div>
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="canvas__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+</div>

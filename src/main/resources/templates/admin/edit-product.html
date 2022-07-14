@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mirrored from www.aksisweb.com/theme/fixed/layouts-1/ecommerce-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Jul 2021 09:02:43 GMT -->
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Quản lý cửa hàng</title>
+
+        <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+
+        <!-- Common Plugins -->
+        <link href="/assets/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		
+        <!-- Summernote -->
+        <link href="/assets/lib/summernote/summernote.css" rel="stylesheet">
+
+        <!-- Custom Css-->
+        <link href="/assets/scss/style.css" rel="stylesheet">
+		
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+
+		<th:block th:insert="/admin/_topbar"></th:block>
+		<th:block th:insert="/admin/_nav"></th:block>
+
+        
+        <!-- ============================================================== -->
+		<!-- 						Content Start	 						-->
+		<!-- ============================================================== -->
+		
+        <div class="row page-header"></div>
+         
+      <section class="main-content">
+
+        <div class="alert bg-success alert-dismissible " role="alert" th:if="${message != null }"> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
+            <strong>Success!</strong> <span th:text="${message}"></span>
+        </div>
+
+
+          <div class="row">
+              <div class="col">
+                  <div class="card">
+                      <div class="card-header card-default">
+                          Thông tin sản phẩm
+                          <p class="text-muted">Xem và cập nhật thông tin sản phẩm</p>
+                      </div>
+                      <div class="card-body">
+                          
+                          <form method="post" action="/ttu-admin/product-manager/edit" 
+                            th:object="${product}" class="form-horizontal" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="hidden" name="id" th:field="*{id}">
+                                    <div class="form-group">
+                                        <label>Tên sản phẩm</label>
+                                        <input type="text" name="name" th:field="*{name}"
+                                          placeholder="New product name" class="form-control form-control-rounded">
+                                    </div>
+                                
+                                    <div class="form-group">
+                                        <label>Danh mục</label>
+                                        <select name="categoryId" class="form-control m-b col-md-6" th:field="*{categoryId}">
+                                            <option th:each="category : ${categories}" th:text="${category.name}" 
+                                              th:value="${category.id}" th:selected="${category.id == product.categoryId}">Option 1</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label>Giá</label>
+                                            <div class="input-group ">
+                                              <input name="price" type="number" class="form-control col-md-6" th:field="*{price}">
+                                                <span class="input-group-addon">vnđ</span>
+                                            </div>     	
+                                        </div>
+      
+                                        <div class="form-group col-md-6">
+                                            <label> <b>Giá khuyến mại </b>(Giá bán)</label>
+                                            <div class="input-group">
+                                              <input name="discountPrice" type="number" class="form-control col-md-6" 
+                                                th:field="*{discountPrice}">
+                                              <span class="input-group-addon">vnđ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <div class="form-group">
+                                                <label>Kho hàng</label>
+                                                <input name="quantity" type="number" th:field="*{quantity}"
+                                                  class="form-control form-control-rounded col-md-8" >
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <div class="form-group">
+                                                <label>Ngày tạo</label>
+                                                <input type="date" th:value="${product.createdDate}"
+                                                  class="form-control form-control-rounded col-md-8" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Ảnh đại diện</label>
+                                                <div class="fileinput-new" data-provides="fileinput">
+                                                    <div class="fileinput-preview" data-trigger="fileinput" style="width: 200px; height:150px;">
+                                                        <img class="img-fluid " th:src="${product.image}" alt="">
+                                                    </div>
+                                                    <span class="btn btn-primary  btn-file">
+                                                        <span class="fileinput-new">Chọn</span>
+                                                        <span class="fileinput-exists">Chọn ảnh khác</span>
+                                                        <input type="file" name="imageFile">
+                                                    </span>
+                                                    <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput">Xóa</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label>Ảnh sản phẩm</label>
+                                                <div class="fileinput fileinput-new input-group " data-provides="fileinput">
+                                                    <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
+                                                    <span class="input-group-addon btn btn-primary btn-file ">
+                                                    <span class="fileinput-new">Chọn</span>
+                                                    <span class="fileinput-exists">Khac</span>
+                                                    <input type="file" name ="gallery" >
+                                                    </span>
+                                                    <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                                </div>
+                                                <div class="fileinput fileinput-new input-group " data-provides="fileinput">
+                                                    <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
+                                                    <span class="input-group-addon btn btn-primary btn-file ">
+                                                    <span class="fileinput-new">Chọn</span>
+                                                    <span class="fileinput-exists">Khac</span>
+                                                    <input type="file" name ="gallery" >
+                                                    </span>
+                                                    <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                                </div>
+                                                <div class="fileinput fileinput-new input-group " data-provides="fileinput">
+                                                    <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
+                                                    <span class="input-group-addon btn btn-primary btn-file ">
+                                                    <span class="fileinput-new">Chọn</span>
+                                                    <span class="fileinput-exists">Khac</span>
+                                                    <input type="file" name ="gallery" >
+                                                    </span>
+                                                    <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                                </div>
+                                                <div class="fileinput fileinput-new input-group " data-provides="fileinput">
+                                                    <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
+                                                    <span class="input-group-addon btn btn-primary btn-file ">
+                                                    <span class="fileinput-new">Chọn</span>
+                                                    <span class="fileinput-exists">Khac</span>
+                                                    <input type="file" name ="gallery" >
+                                                    </span>
+                                                    <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                                </div>
+                                                <div class="fileinput fileinput-new input-group " data-provides="fileinput">
+                                                    <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
+                                                    <span class="input-group-addon btn btn-primary btn-file ">
+                                                    <span class="fileinput-new">Chọn</span>
+                                                    <span class="fileinput-exists">Khac</span>
+                                                    <input type="file" name ="gallery" >
+                                                    </span>
+                                                    <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                                </div>
+                                                <div class="fileinput fileinput-new input-group " data-provides="fileinput">
+                                                    <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
+                                                    <span class="input-group-addon btn btn-primary btn-file ">
+                                                    <span class="fileinput-new">Chọn</span>
+                                                    <span class="fileinput-exists">Khac</span>
+                                                    <input type="file" name ="gallery" >
+                                                    </span>
+                                                    <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    
+                                </div>
+                            </div>
+                                 
+
+                            <div class="form-group">
+                                <label>Mô tả sản phẩm</label>
+                                <textarea name="description" th:field="*{description}" id="summernote" style="display: none;">
+                                <p>Hello Summernote</p>
+                                </textarea>
+                            </div>
+
+                                  
+
+                            <button type="submit" class="btn btn-success btn-icon"><i class="fa fa-floppy-o "></i>Cập nhật</button>
+                            <a href="/ttu-admin/product-manager/" class="btn btn-warning btn-icon"><i class="fa fa-reply"></i>Quay lại</a>		
+                                                
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          
+
+          <footer class="footer">
+              <span>Copyright &copy; 2018 FixedPlus</span>
+          </footer>
+
+
+      </section>
+      <!-- ============================================================== -->
+      <!-- 						Content Start	 						-->
+      <!-- ============================================================== -->
+
+
+
+        <!-- Common Plugins-->
+        <script src="/assets/lib/jquery/dist/jquery.min.js"></script>
+		<script src="/assets/lib/bootstrap/js/popper.min.js"></script>
+        <script src="/assets/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/assets/lib/pace/pace.min.js"></script>
+        <script src="/assets/lib/jasny-bootstrap/js/jasny-bootstrap.min.js"></script>
+        <script src="/assets/lib/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="/assets/lib/nano-scroll/jquery.nanoscroller.min.js"></script>
+        <script src="/assets/lib/metisMenu/metisMenu.min.js"></script>
+        <script src="/assets/js/custom.js"></script>
+		
+        <!-- Summernote -->
+        <script src="/assets/lib/summernote/summernote.js"></script>
+        <script type="text/javascript">
+			$(document).ready(function() {
+				$('#summernote').summernote({
+				  height:'300px',
+				  toolbar: [
+					['style', ['bold', 'italic', 'underline', 'clear']],
+					['fontsize', ['fontsize']],
+                    ['fontname', ['fontname']],
+					['color', ['color']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+					['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link', 'picture']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+
+				  ]
+				});
+				$('button[data-event="showImageDialog"]').attr('data-toggle', 'image').removeAttr('data-event'); 
+			});
+		</script>
+    </body>
+
+<!-- Mirrored from www.aksisweb.com/theme/fixed/layouts-1/ecommerce-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Jul 2021 09:02:43 GMT -->
+</html>

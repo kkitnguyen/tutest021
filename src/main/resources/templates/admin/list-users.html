@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!-- Mirrored from www.aksisweb.com/theme/fixed/layouts-1/ecommerce-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Jul 2021 09:02:43 GMT -->
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Quản lý cửa hàng</title>
+
+        <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+        
+        <!-- Common Plugins -->
+        <link href="/assets/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		
+        <!-- DataTables -->
+        <link href="/assets/lib/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+        <link href="/assets/lib/datatables/responsive.bootstrap.min.css" rel="stylesheet" type="text/css">
+
+        <!-- Custom Css-->
+        <link href="/assets/scss/style.css" rel="stylesheet">
+		
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+
+		<th:block th:insert="/admin/_topbar"></th:block>
+		<th:block th:insert="/admin/_nav"></th:block>
+
+        
+		<!-- ============================================================== -->
+		<!-- 						Content Start	 						-->
+		<!-- ============================================================== -->
+		
+        <div class="row page-header"></div>
+
+      <section class="main-content">
+
+          <div class="row">
+              <div class="col-md-12">
+                  <div class="card">
+                   <div class="card-header card-default">
+                        <div class="float-right mt-10">
+                            <a href="/ttu-admin/account-manager/add" class="btn btn-primary btn-rounded box-shadow btn-icon">
+                            <i class="fa fa-plus"></i> Tạo tài khoản mới
+                        </a>
+                        </div>
+                        Danh sách tài khoản
+                        <p class="text-muted">Quản lý tài khoản</p>
+                    </div>
+                      
+                      <div class="card-body">
+                              <table id="datatable1" class="table table-striped dt-responsive nowrap table-hover">
+                                  <thead>
+                                      <tr>
+                                          <th class="text-center">
+                                              <strong>ID</strong>
+                                          </th>
+                                          <th class="text-center">
+                                              <strong>Họ và tên</strong>
+                                          </th>
+                                          <th class="text-center">
+                                              <strong>Email</strong>
+                                          </th>
+                                          <th class="text-center">
+                                              <strong>SĐT</strong>
+                                          </th>
+                                          <th class="text-center">
+                                              <strong>Địa chỉ</strong>
+                                          </th>
+                                          <th class="text-center">
+                                            <strong>Loại</strong>
+                                          </th>
+                                          <th class="text-center">
+                                              <strong>Chi tiết</strong>
+                                          </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                    
+                                      <tr th:each="user: ${users}" >
+                                          <td th:text="${user.id}">0001</td>
+                                          <td th:text="${user.fullname}">Nguyễn Xuân Khương</td>
+                                          <td th:text="${user.email}">khuong@gmail.com</td>
+                                          <td th:text="${user.phoneNumber}">0989123456</td>
+                                          <td th:text="${user.address}">Hà Nội</td>
+
+                                          <td class="text-center">
+                                            <span th:if="${user.isadmin}">Admin</span>
+                                            <span th:if="${!user.isadmin}">Khách</span>
+                                          </td>
+                                          <td class="text-center">
+                                              <a th:href="@{'/ttu-admin/account-manager/detail/' + ${user.id}}" 
+                                                class="btn btn-sm btn-success"><i class="fa fa-search"></i></a>
+                                          </td>
+                                      </tr>
+                                    
+                                      
+                                  </tbody>
+                              </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          
+
+          <footer class="footer">
+              <span>Copyright &copy; 2018 FixedPlus</span>
+          </footer>
+
+
+      </section>
+      <!-- ============================================================== -->
+      <!-- 						Content End 	 						-->
+      <!-- ============================================================== -->
+
+
+
+        <!-- Common Plugins-->
+        <script src="/assets/lib/jquery/dist/jquery.min.js"></script>
+		<script src="/assets/lib/bootstrap/js/popper.min.js"></script>
+        <script src="/assets/lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/assets/lib/pace/pace.min.js"></script>
+        <script src="/assets/lib/jasny-bootstrap/js/jasny-bootstrap.min.js"></script>
+        <script src="/assets/lib/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="/assets/lib/nano-scroll/jquery.nanoscroller.min.js"></script>
+        <script src="/assets/lib/metisMenu/metisMenu.min.js"></script>
+        <script src="/assets/js/custom.js"></script>
+		
+        <!-- Datatables-->
+        <script src="/assets/lib/datatables/jquery.dataTables.min.js"></script>
+        <script src="/assets/lib/datatables/dataTables.responsive.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#datatable1').dataTable();
+            });
+        </script>
+    </body>
+
+<!-- Mirrored from www.aksisweb.com/theme/fixed/layouts-1/ecommerce-products.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 26 Jul 2021 09:02:43 GMT -->
+</html>
