@@ -7,7 +7,7 @@
     <meta name="keywords" content="Ashion, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Đăng nhập - Tủ decor</title>
+    <title>Tủ decor - Trang trí nhà xinh</title>
 
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
 
@@ -29,49 +29,18 @@
 
 <body>
     <!-- Page Preloder -->
-    <!-- <div id="preloder">
+    <div id="preloder">
         <div class="loader"></div>
-    </div> -->
+    </div>
 
     <th:block th:insert="shop/_header"></th:block>
 
-    <script th:if="${message != null}">
-        alert("[[${message}]]")
-    </script>
-
-    <!-- Login Section Begin -->
-    <section class="checkout spad">
-        <div class="container">
-            
-            <form action="/login" class="checkout__form" method="post">
-                <div class="row col-center">
-                    <div class="col-lg-4 col-md-3"></div>
-
-                    <div class="col-lg-4 col-md-6">
-                        <h5>Đăng nhập</h5>
-
-                        <div class="checkout__form__input">
-                            <p>Email <span>*</span></p>
-                            <input type="text" name="email">
-                        </div>
-
-                        <div class="checkout__form__input">
-                            <p>Password <span>*</span></p>
-                            <input type="password" name="password">
-                        </div>
-
-                        <div class="mb-4">
-                            Lưu trình duyệt
-                            <input type="checkbox" name="remember" checked>
-                        </div>
-
-                        <input type="submit" class="site-btn" value="Đăng nhập">
-                    </div>
-                </div>
-            </form>   
-        </div> 
-    </section>
-    <!-- Login Section End -->
+    <div style="text-align: center;">
+        <img src="/images/404.png" alt="" width="50%">
+        <br><br>
+        <a href="/home" class="primary-btn btn-rounded">Về trang chủ</a>
+        <br><br>
+    </div>
 
     <th:block th:insert="shop/_insta"></th:block>
     <th:block th:insert="shop/_footer"></th:block>

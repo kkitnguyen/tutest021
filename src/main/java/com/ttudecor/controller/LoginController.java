@@ -1,7 +1,5 @@
 package com.ttudecor.controller;
 
-import java.util.Optional;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,11 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.ttudecor.dto.UserDto;
 import com.ttudecor.entity.User;
 import com.ttudecor.service.UserService;
 import com.ttudecor.utils.EncryptionUtils;
@@ -51,9 +47,9 @@ public class LoginController {
 		
 		Object uri = session.getAttribute("redirectUri");
 		
-		if(user != null) {
+		if(user != null) { //login successfully
 			
-			if(remember) {
+			if(remember) { //encrypt and store userId to Cookie
 				String uid = EncryptionUtils.encrypt("LoginID", user.getId() + "");
 				Cookie cookie = new Cookie("uid", uid);
 				cookie.setMaxAge(60*60*24 * 15);
@@ -66,11 +62,13 @@ public class LoginController {
 			
 			if(user.isIsadmin()) session.setAttribute("admin", true);
 			
+			//redirect to before uri
 			if(uri != null) {
 				session.removeAttribute("redirectUri");
 				return "redirect:" + uri;
 			}
-
+			
+			//redirect to admin page if user is admin
 			if(user.isIsadmin()) return "redirect:/ttu-admin";
 			else return "redirect:/home";
 		}
@@ -80,6 +78,7 @@ public class LoginController {
 		}
 	}
 	
+	//logout and remove cookie, session
 	@GetMapping("/logout")
 	public String logout(HttpServletResponse response){
 		Cookie cookie = new Cookie("uid", "");

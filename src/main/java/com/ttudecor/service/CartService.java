@@ -4,16 +4,13 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.SessionScope;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -24,61 +21,53 @@ import com.ttudecor.utils.EncryptionUtils;
 
 
 @Service
-@SessionScope
 public class CartService {
 	
 	private Map<Integer, CartItemDto> cart = new HashMap<Integer, CartItemDto>();
-	
-	
-	
-	public Map<Integer, CartItemDto> getCart() {
-		return cart;
-	}
 
-	public void setCart(Map<Integer, CartItemDto> cart) {
-		this.cart = cart;
-	}
-
-	ProductService productService;
+	private final ProductService productService;
 	
 	@Autowired
 	public CartService(ProductService productService) {
 		this.productService = productService;
 	}
 	
+	//Get cart from cookie
 	public void getCartFromCookie(String cartJson) {
 		cartJson = EncryptionUtils.dencrypt("KEYKEYKEY", cartJson);
-		
-		cart = new HashMap<Integer, CartItemDto>();
-		
+
 		Gson gson = new Gson();
 		Type type = new TypeToken<Collection<CartItemModel>>(){}.getType();
 	
-		
 		Collection<CartItemModel> list = gson.fromJson(cartJson, type);
 		Product product = new Product();
 		
 		if(list != null) {
+			cart = new HashMap<Integer, CartItemDto>();
+			
 			for(CartItemModel item : list) {
-				product = productService.findById(item.getProductId()).get();
+				product = productService.findProductById(item.getProductId());
 				
 				if(product != null) {
 					CartItemDto itemDto = new CartItemDto();
-					
-					if(product.getDiscountPrice() == 0) 
-						itemDto = new CartItemDto(product.getId(), 
-							product.getName(), product.getImage(), product.getPrice(), item.getQuantity());
-					else
-						itemDto = new CartItemDto(product.getId(), 
-							product.getName(), product.getImage(), product.getDiscountPrice(), item.getQuantity());
-							
-					cart.put(product.getId(), itemDto);
+
+					if(product.getQuantity() > 0 ) {
+
+						//cart quantity must be <= product quantity
+						int quantity;
+						if(item.getQuantity() > product.getQuantity()) quantity = product.getQuantity();
+						else quantity = item.getQuantity();
+						
+						itemDto = new CartItemDto(product, quantity);
+						cart.put(product.getId(), itemDto);
+					}
 				}
 				
 			}
 		}
 	}
-		
+	
+	//add cart to cookie
 	public void addCartToCookie(HttpServletResponse response) {
 		Collection<CartItemDto> list = null;
 		
@@ -105,28 +94,45 @@ public class CartService {
 		response.addCookie(cookie);
 	}
 		
-	public void add(int productId) {
+	//add a quantity to cart
+	public void add(int productId, int quantity) {
+		Product product = productService.findProductById(productId);
 		
-		Optional<Product> opt = productService.findById(productId);
-		Product product = opt.get();
-
-		CartItemDto oldItem = cart.get(productId);
+		CartItemDto item = cart.get(productId);
 		
-		if(oldItem != null) {
-			oldItem.setQuantity(oldItem.getQuantity() + 1);
-			cart.replace(productId, oldItem);
+		if(item != null) {
+			int newQuantity = item.getQuantity() + quantity;
+			
+			if(newQuantity <= product.getQuantity()) { 
+				item.setQuantity(newQuantity);
+			}else item.setQuantity(product.getQuantity());
 			
 		}else {
-			CartItemDto item = new CartItemDto();
+			//add to cart if product in stock
+			if(product.getQuantity() >0 ) {
+				item = new CartItemDto();
+
+				if(quantity > product.getQuantity()) 
+					quantity = product.getQuantity();
+				
+				item = new CartItemDto(product, quantity);
+				cart.put(product.getId(), item);
+			}
+		}
+	}
+	
+	//update quantity
+	public void update(int productId, int quantity) {
+		CartItemDto item = cart.get(productId);
+
+		if(quantity <=0)
+			cart.remove(productId);
+		else {
+			Product product = productService.findProductById(productId);
 			
-			if(product.getDiscountPrice() == 0) 
-				item = new CartItemDto(product.getId(), 
-					product.getName(), product.getImage(), product.getPrice(), 1);
-			else
-				item = new CartItemDto(product.getId(), 
-					product.getName(), product.getImage(), product.getDiscountPrice(), 1);
-			
-			cart.put(product.getId(), item);
+			if(quantity <= product.getQuantity())
+				item.setQuantity(quantity);
+			else item.setQuantity(product.getQuantity());
 		}
 	}
 	
@@ -145,14 +151,7 @@ public class CartService {
 		cart.clear();
 	}
 	
-	public void update(int productId, int quantity) {
-		CartItemDto item = cart.get(productId);
-		
-		if(quantity <=0)
-			cart.remove(productId);
-		else item.setQuantity(quantity);
-	}
-	
+	//get amount of product in cart
 	public int getAmount() {
 		Collection<CartItemDto> list = null;
 		

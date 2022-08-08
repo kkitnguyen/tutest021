@@ -29,8 +29,8 @@
     </head>
     <body>
 
-		<th:block th:insert="/admin/_topbar"></th:block>
-		<th:block th:insert="/admin/_nav"></th:block>
+		<th:block th:insert="admin/_topbar"></th:block>
+		<th:block th:insert="admin/_nav"></th:block>
 
         
 		<!-- ============================================================== -->
@@ -77,12 +77,12 @@
                                   </thead>
                                   <tbody>
                                       <tr th:each="f, i : ${feedbacks}">
-                                          <td th:text="${i.count}">0001</td>
+                                          <td class="text-center" th:text="${i.count}">0001</td>
                                           <td th:text="${f.fullname}"></td>
                                           <td th:text="${f.email}"></td>
-                                          <td th:text="${f.phoneNumber}"></td>
+                                          <td class="text-center" th:text="${f.phoneNumber}"></td>
                                           <td th:text="${f.message}"></td>
-                                          <td th:text="${f.createdDate}"></td>
+                                          <td class="text-center" th:text="${f.createdTime}"></td>
                                           <td class="text-center">
                                               <a th:onclick="'deleteItem(' + ${f.id} + ')'"
                                                 data-toggle="modal" data-target=".bs-example-modal-sm"

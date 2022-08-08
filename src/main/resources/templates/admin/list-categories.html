@@ -29,8 +29,8 @@
     </head>
     <body>
 
-		<th:block th:insert="/admin/_topbar"></th:block>
-		<th:block th:insert="/admin/_nav"></th:block>
+		<th:block th:insert="admin/_topbar"></th:block>
+		<th:block th:insert="admin/_nav"></th:block>
 
         
 		<!-- ============================================================== -->
@@ -40,11 +40,13 @@
         <div class="row page-header"></div>
 
         <section class="main-content">
-			<div class="alert bg-success alert-dismissible " role="alert" th:if="${message != null}"> 
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button> 
+			<div class="alert bg-danger alert-dismissible " role="alert" th:if="${message != null}"> 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
 				<strong th:text="${message}"></strong>
+			</div>
+            <div class="alert bg-success alert-dismissible " role="alert" th:if="${success != null}"> 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
+				<strong th:text="${success}"></strong>
 			</div>
 
             <div class="row">
@@ -80,9 +82,9 @@
                                     </thead>
                                     <tbody>
                                         <tr th:each="category : ${categories}">
-                                            <td th:text="${category.id}">0001</td>
+                                            <td class="text-center" th:text="${category.id}">0001</td>
                                             <td th:text="${category.name}">Album, phu kien</td>
-                                            <td th:text="${category.numberOfProduct}">15</td>
+                                            <td class="text-center" th:text="${category.numberOfProduct}">15</td>
                                             <td class="text-center">
                                                 <a th:href="@{'/ttu-admin/category-manager/edit/' + ${category.id}}" 
                                                     type="button" class="btn btn-sm btn-success"><i class="fa fa-edit"></i></a>

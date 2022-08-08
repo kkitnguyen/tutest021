@@ -1,20 +1,17 @@
 package com.ttudecor.controller.admin;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ttudecor.dto.OrderDto;
-import com.ttudecor.entity.Category;
 import com.ttudecor.entity.Order;
 import com.ttudecor.service.OrderDetailService;
 import com.ttudecor.service.OrderService;
@@ -51,10 +48,8 @@ public class OrderController {
 	
 	@GetMapping("detail/{id}")
 	public String detail(Model model, @PathVariable("id") Integer id) {
-		Optional<Order> opt = orderService.findById(id);
-		Order order = new Order();
-		if(opt != null) order = opt.get();
 		
+		Order order = orderService.findOrderById(id);
 		OrderDto dto = orderService.copy(order);
 		
 		model.addAttribute("order", dto);
@@ -69,10 +64,7 @@ public class OrderController {
 			@RequestParam("status") Integer status) {
 		orderService.updateStatus(id, status);
 		
-		Optional<Order> opt = orderService.findById(id);
-		Order order = new Order();
-		if(opt != null) order = opt.get();
-		
+		Order order = orderService.findOrderById(id);
 		OrderDto dto = orderService.copy(order);
 		
 		model.addAttribute("order", dto);

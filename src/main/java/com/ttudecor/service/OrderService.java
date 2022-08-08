@@ -1,11 +1,15 @@
 package com.ttudecor.service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,80 +23,65 @@ import com.ttudecor.repository.OrderRepository;
 
 @Service
 public class OrderService {
-	OrderRepository orderRepository;
-	ProductService productService;
-	OrderDetailService orderDetailService;
+	private final OrderRepository orderRepository;
+	private final ProductService productService;
+	private final OrderDetailService orderDetailService;
+	private final ModelMapper mapper;
 	
 	@Autowired
+	private HttpSession session;
 	
+	@Autowired
 	public OrderService(OrderRepository orderRepository, ProductService productService,
-			OrderDetailService orderDetailService) {
+			OrderDetailService orderDetailService,  ModelMapper mapper) {
 		this.orderRepository = orderRepository;
 		this.productService = productService;
 		this.orderDetailService = orderDetailService;
+		this.mapper = mapper;
 	}
 
 	
 	public void checkout(Collection<CartItemDto> listCart, OrderDto orderDto) {
 		
-		Date now = new Date();
+		LocalDateTime now = LocalDateTime.now();
 		String billCode = createBillCode(now);
 		
-		Order order = new Order(billCode, orderDto.getFullname(), orderDto.getEmail(), 
-				orderDto.getPhoneNumber(), orderDto.getAddress(), orderDto.getNote(), now, 0);
+		Order order = mapper.map(orderDto, Order.class);
+		order.setBillCode(billCode);
+		order.setOrderTime(now);
+		order.setStatus(0);
 		
-		if(orderDto.getUserId() != 0) {
+		//Set user for order if customer logged in
+		if(session.getAttribute("fullname") != null) {
 			User user = new User();
-			user.setId(orderDto.getUserId());
+			user.setId((Integer) session.getAttribute("userId"));
 			order.setUser(user);
 		}
-
 		save(order);
 		
 		for(CartItemDto item : listCart) {
-			Product product = productService.findById(item.getProductId()).get();
+			//increase product sold and reduce product quantity
+			Product product = productService.findProductById(item.getProductId());
+			product.setQuantity(product.getQuantity() - item.getQuantity());
 			product.setSold(product.getSold() + item.getQuantity());
 			productService.save(product);
-			OrderDetail detail = new OrderDetail(order, product, item.getPrice(), item.getQuantity());
 			
+			//Save order detail
+			OrderDetail detail = new OrderDetail(order, product, item.getPrice(), item.getQuantity());
 			orderDetailService.save(detail);
 		}
 	}
 	
-	public String createBillCode(Date now) {
-
-		String year = (now.getYear() + "").substring(1);
+	// Create billcode by datetime: TUyyMMddHHmmss
+	public String createBillCode(LocalDateTime now) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMddHHmmss");
 		
-		String month = "";
-		if(now.getMonth() >= 9) month = now.getMonth() + 1 + "";
-		else month = "0" + (now.getMonth() + 1);
-		
-		String date = "";
-		if(now.getDate()>=10) date = now.getDate() + "";
-		else date = "0" + now.getDate();
-		
-		String hour = "";
-		if(now.getHours()>=10) hour = now.getHours() + "";
-		else hour = "0" + now.getHours();
-		
-		String minute = "";
-		if(now.getMinutes()>=10) minute = now.getMinutes() + "";
-		else minute = "0" + now.getMinutes();
-		
-		String second = "";
-		if(now.getSeconds()>=10) second = now.getSeconds() + "";
-		else second = "0" + now.getSeconds();
-		
-		String billCode = "TU" + year + month + date + hour + minute + second;
-		
+		String billCode = "TU" + now.format(formatter);
 		return billCode;
 	}
 	
 	public void updateStatus(int id, int status) {
-		Optional<Order> opt = findById(id);
-		Order order = new Order();
-		if(opt != null) order = opt.get();
-		
+		Order order = findOrderById(id);
 		order.setStatus(status);
 		save(order);
 	}
@@ -113,32 +102,42 @@ public class OrderService {
 	}
 	
 	public OrderDto copy(Order o) {
-		OrderDto dto = new OrderDto();
+		OrderDto dto = mapper.map(o, OrderDto.class);
 		
-		dto.setId(o.getId());
-		dto.setBillCode(o.getBillCode());
-		dto.setEmail(o.getEmail());
-		dto.setFullname(o.getFullname());
-		dto.setPhoneNumber(o.getPhoneNumber());
-		dto.setAddress(o.getAddress());
-		dto.setNote(o.getNote());
-		dto.setOrderTime(o.getOrderTime());
-		dto.setStatus(o.getStatus());
-		
+		//set user id
 		if(o.getUser() != null) {
 			dto.setUserId(o.getUser().getId());
 		}
 		
+		//set total amount
 		int amount = 0;
 		for(OrderDetail detail : o.getOrderDetails()) {
 			amount += detail.getPrice() * detail.getQuantity();
 		}
-		
 		dto.setAmount(amount);
 		
+		//format time
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+		dto.setOrderTime(o.getOrderTime().format(formatter));
+
 		return dto;
 	}
-
+	
+	public List<OrderDto> findOrderDtoByUserId(int userId) {
+		List<Order> list = findByUserId(userId);
+		
+		List<OrderDto> listDto = new ArrayList<>();
+		OrderDto dto = new OrderDto();
+		
+		if(list != null)
+			for(Order order : list) {
+				dto = copy(order);
+				listDto.add(dto);
+			}
+		
+		return listDto;
+	}
+	
 	public <S extends Order> S save(S entity) {
 		return orderRepository.save(entity);
 	}
@@ -150,10 +149,26 @@ public class OrderService {
 	public Optional<Order> findById(Integer id) {
 		return orderRepository.findById(id);
 	}
+	
+	public Order findOrderById(Integer id) {
+		try {
+			Optional<Order> opt = findById(id);
+			return opt.get();
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
 
 	public void delete(Order entity) {
 		orderRepository.delete(entity);
 	}
+
+	public List<Order> findByUserId(int userId) {
+		return orderRepository.findByUserId(userId);
+	}
+	
 	
 	
 }

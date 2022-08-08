@@ -1,7 +1,5 @@
 package com.ttudecor.dto;
 
-import java.util.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +17,7 @@ public class OrderDto {
 	private String phoneNumber;
 	private String address;
 	private String note;
-	private Date orderTime;
+	private String orderTime;
 	private int status;
 	private int amount;
 

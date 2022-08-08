@@ -1,7 +1,6 @@
 package com.ttudecor.controller;
 
 import java.util.Collection;
-import java.util.Date;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -14,18 +13,12 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ttudecor.dto.CartItemDto;
 import com.ttudecor.dto.OrderDto;
-import com.ttudecor.entity.Order;
-import com.ttudecor.entity.OrderDetail;
 import com.ttudecor.entity.User;
 import com.ttudecor.service.CartService;
-import com.ttudecor.service.OrderDetailService;
 import com.ttudecor.service.OrderService;
-import com.ttudecor.service.ProductService;
 import com.ttudecor.service.UserService;
 
 @Controller
@@ -52,16 +45,15 @@ public class CheckoutController {
 		Collection<CartItemDto> list = cartService.getCartItems();
 		
 		if(cartService.count() > 0) {
-			model.addAttribute("cartItems", list);
-			model.addAttribute("cartAmount", cartService.getAmount());
+			//return to checkout page if cart is not empty
 			
 			OrderDto orderDto = new OrderDto();
 			
+			//pre-filled customer information if customer logged in
 			if(session.getAttribute("fullname") != null) {
 				int userId = (int) session.getAttribute("userId");
-				User user = userService.findById(userId).get();
-				
-				orderDto.setUserId(userId);
+				User user = userService.findUserById(userId);
+
 				orderDto.setFullname(user.getFullname());
 				orderDto.setEmail(user.getEmail());
 				orderDto.setPhoneNumber(user.getPhoneNumber());
@@ -69,7 +61,12 @@ public class CheckoutController {
 			}
 			
 			model.addAttribute("order", orderDto);
+			model.addAttribute("cartItems", list);
+			model.addAttribute("cartAmount", cartService.getAmount());
+			
 			return "shop/checkout";
+			
+			//redirect to cart page if cart is empty
 		} else return "redirect:/cart";
 		
 	}
@@ -84,6 +81,7 @@ public class CheckoutController {
 		Collection<CartItemDto> listCart = cartService.getCartItems();
 		
 		if(cartService.count() > 0) {
+			//checkout if cart is not empty
 			orderService.checkout(listCart, orderDto);
 			
 			Cookie cookie = new Cookie("cart", "");
@@ -93,6 +91,7 @@ public class CheckoutController {
 			model.addAttribute("success", true);
 			return "shop/checkout";
 			
+			//redirect to cart page if cart is empty
 		} else return "redirect:/cart";
 		
 	}

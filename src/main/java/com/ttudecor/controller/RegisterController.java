@@ -1,7 +1,5 @@
 package com.ttudecor.controller;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ttudecor.dto.UserDto;
-import com.ttudecor.entity.User;
 import com.ttudecor.service.UserService;
 
 @Controller
@@ -28,6 +25,7 @@ public class RegisterController {
 	@GetMapping("/register")
 	public String register(Model model){
 		
+		//redirect to home page when logged in
 		if(session.getAttribute("fullname") != null) 
 			return "redirect:/home";
 		else {
@@ -42,27 +40,10 @@ public class RegisterController {
 	public String login(Model model, @ModelAttribute("user") UserDto userDto,
 			@RequestParam("password") String password, @RequestParam("rePassword") String rePassword){
 		
-		User user = new User();
-		user = userService.findByEmail(userDto.getEmail());
+		userDto.setIsadmin(false);
+		boolean success = userService.register(model, userDto, password, rePassword);
 		
-		if(user != null)
-			model.addAttribute("message", "Email đã tồn tại, vui lòng chọn email khác.");
-		else if(!password.equals(rePassword))
-			model.addAttribute("message", "Nhập lại mật khẩu không khớp.");
-		else if(password.length() < 6)
-			model.addAttribute("message", "Mật khẩu tối thiểu 6 ký tự.");
-		else {
-			user = new User();
-			user = userService.copy(userDto);
-			
-			Date now = new Date();
-			user.setCreatedDate(now);
-			user.setPassword(password);
-			user.setIsadmin(false);
-			userService.save(user);;;
-			
-			model.addAttribute("success", true);
-		}
+		if(success) model.addAttribute("success", true);
 		return "shop/register";
 	}
 	

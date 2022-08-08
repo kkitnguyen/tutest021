@@ -1,8 +1,6 @@
 package com.ttudecor.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ttudecor.dto.OrderDto;
 import com.ttudecor.dto.UserDto;
 import com.ttudecor.entity.Order;
-import com.ttudecor.entity.User;
-import com.ttudecor.service.OrderDetailService;
 import com.ttudecor.service.OrderService;
 import com.ttudecor.service.UserService;
 
@@ -31,103 +27,81 @@ public class ProfileController {
 	private UserService userService;
 	
 	@Autowired
-	OrderService orderService;
-	
+	private OrderService orderService;
+
 	@Autowired
-	OrderDetailService orderDetailService;
+	private HttpSession session;
 	
-	@Autowired
-	HttpSession session;
-	
+	//show information
 	@RequestMapping("")
 	public String show(Model model) {
-			
 		int id = (int) session.getAttribute("userId");
-		
-		Optional<User> opt = userService.findById(id);
-		User user = new User();
-		if(opt != null) user = opt.get();
-		
-		UserDto userDto = userService.copy(user);
 
-		model.addAttribute("user", userDto);
+		model.addAttribute("user", userService.findUserDtoById(id));
 		
 		return "shop/profile";
 	}
 
+	//update user
 	@PostMapping("update")
 	public String update(Model model, @ModelAttribute("user") UserDto userDto) {
 		int id = (int) session.getAttribute("userId");
 		
-		Optional<User> opt = userService.findById(id);
-		User user = new User();
-		if(opt != null) user = opt.get();
-		
-		user.setFullname(userDto.getFullname());
-		user.setEmail(userDto.getEmail());
-		user.setPhoneNumber(userDto.getPhoneNumber());
-		user.setAddress(userDto.getAddress());
-		
-		userService.save(user);
-		
 		model.addAttribute("user", userDto);
-		model.addAttribute("message", "Cập nhật thông tin thành công");
+		
+		if(userService.update(userDto, id)) 
+			model.addAttribute("message", "Cập nhật thông tin thành công");
+		else
+			model.addAttribute("message", "Có lỗi xảy ra. Cập nhật thất bại.");
 		
 		return "shop/profile";
 	}
 	
+	//Show list order
 	@GetMapping("order")
-	public String order(Model model) {
+	public String listOrder(Model model) {
 
 		int id = (int) session.getAttribute("userId");
-		
-		Optional<User> opt = userService.findById(id);
-		User user = new User();
-		if(opt != null) user = opt.get();
-		
-		List<Order> list = user.getOrders();
-		
-		List<OrderDto> listOrders = new ArrayList<OrderDto>();
-		
-		OrderDto dto = new OrderDto();
-		
-		if(list != null) {
-			for(Order order : list) {
-				dto = orderService.copy(order);
-				listOrders.add(dto);
-			}
-		}
-		
+
+		List<OrderDto> listOrders = orderService.findOrderDtoByUserId(id);
 		model.addAttribute("orders", listOrders);
 	
 		return "shop/profile";
 		
 	}
 	
+	//order detail
 	@GetMapping("order/detail/{id}")
-	public String edit(Model model, @PathVariable("id") Integer orderId) {
-
-		Optional<Order> opt = orderService.findById(orderId);
-		Order order = new Order();
-		if(opt != null) order = opt.get();
+	public String orderDetail(Model model, @PathVariable("id") Integer orderId) {
 		
-		if(order.getUser() == null) 
-			return "redirect:/profile/order";
-		else {
-			int userId = (int) session.getAttribute("userId");
+		try {
+			Order order = orderService.findById(orderId).get();
 			
-			if(order.getUser().getId() != userId)
-				return "redirect:/profile/order";
+			//order of guest
+			if(order.getUser() == null) 
+				return "redirect:/profile/order"; 
+			else {
+				int userId = (int) session.getAttribute("userId");
+				
+				//order of other user
+				if(order.getUser().getId() != userId)
+					return "redirect:/profile/order";
+			}
+			
+			OrderDto dto = orderService.copy(order);
+			
+			model.addAttribute("order", dto);
+			model.addAttribute("orderDetails", order.getOrderDetails());
+
+			return "shop/profile";
+		} catch (Exception e) {
+			return "redirect:/profile/order";
 		}
 		
-		OrderDto dto = orderService.copy(order);
-		
-		model.addAttribute("order", dto);
-		model.addAttribute("orderDetails", order.getOrderDetails());
-
-		return "shop/profile";
 	}
 	
+	
+	//Change password
 	@GetMapping("change-password")
 	public String changePassword(Model model) {
 		
@@ -142,25 +116,9 @@ public class ProfileController {
 			@RequestParam String password, @RequestParam String rePassword) {
 		
 		int id = (int) session.getAttribute("userId");
-		
-		Optional<User> opt = userService.findById(id);
-		User user = new User();
-		if(opt != null) user = opt.get();
-		
-		if(!user.getPassword().equals(oldPassword)) 
-			model.addAttribute("message", "Nhập sai mật khẩu cũ");
-		else if(!rePassword.equals(password))
-			model.addAttribute("message", "Nhập lại mật khẩu không khớp");
-		else if(password.length() < 6)
-			model.addAttribute("message", "Mật khẩu tối thiểu 6 ký tự");
-		else {
-			user.setPassword(password);
-			userService.save(user);
-			model.addAttribute("message", "Đổi mật khẩu thành công");
-		}
+		userService.changePassword(model, id, oldPassword, password, rePassword);
 		
 		model.addAttribute("changePassword", true);
-		
 		return "shop/profile";
 		
 	}

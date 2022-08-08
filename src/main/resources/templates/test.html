@@ -13,6 +13,26 @@
         <input type="submit" value="Upload">
     </form>
 
+
     <h3 th:text="${file}"></h3>
+
+    <br><hr>
+    <form action="/test1" method="post" th:object="${feedback}">
+        ID <input type="text" th:field="*{id}">
+        <br><br> Fullname <input type="text" th:field="*{fullname}">
+        <br><br> Email <input type="text" th:field="*{email}">
+        <br><br> Phone number <input type="text" th:field="*{phoneNumber}">
+        <br><br> Created time <input type="datetime-local" th:field="*{createdTime}">
+        <br><br> Message <textarea type="text" th:field="*{message}" ></textarea>
+        
+        <br><br><br><br> Date <input type="date" name="date">
+        <br><br> Datetime <input type="datetime-local" name="datetime">
+
+        <br><br><br><br>
+        <input type="submit" value="Update">
+    </form>
+
+    <br><br> Datetime <input type="datetime-local" th:value="${ok}">
+
 </body>
 </html>

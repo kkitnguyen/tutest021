@@ -1,11 +1,15 @@
 package com.ttudecor.controller;
 
 import java.util.List;
-import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -28,42 +32,56 @@ public class ShopController {
 	@Autowired
 	private CategoryService categoryService;
 	
+	//show all products
 	@RequestMapping("/shop")
-	public String showAll(Model model) {
-		model.addAttribute("products", productService.getAllProductDto());
+	public String showAll(Model model, @PageableDefault(size = 9) Pageable pageable) {
+
+		Page<ProductDto> page = productService.getProductDtoPaginated(pageable);
+
+		model.addAttribute("page",page);
 		model.addAttribute("categories", categoryService.findAll());
 		
 		model.addAttribute("shopPage", true);
 		return "shop/shop";
 	}
 	
-	@RequestMapping("/search")
-	public String search(Model model, @RequestParam("productName") String name) {
-		model.addAttribute("products", productService.getProductDtoByName(name));
-		model.addAttribute("categories", categoryService.findAll());
-		
-		model.addAttribute("shopPage", true);
-		return "shop/shop";
-	}
-	
-	@RequestMapping("shop/{url}")
-	public String showByCategory(Model model, @PathVariable("url") String url) {
+	//List product filter by category
+	@RequestMapping("shop/{categoryUrl}")
+	public String showByCategory(Model model, @PathVariable("categoryUrl") String url,
+			@PageableDefault(size = 9) Pageable pageable) {
 		
 		url = url.substring(url.length() - 2);
 		int id = Integer.parseInt(url);
 		
-		Optional<Category> opt = categoryService.findById(id);
-		Category category = new Category();
-		if(opt != null) category = opt.get();
+		Page<ProductDto> page = productService.getProductDtoByCategoryIdPaginated(id, pageable);
 		
-		model.addAttribute("products", category.getProducts());
-		model.addAttribute("categories", categoryService.findAll());
+		Category category = categoryService.findCategoryById(id);
+		
+		model.addAttribute("page", page);
 		model.addAttribute("category", category);
+		model.addAttribute("categories", categoryService.findAll());
 		
 		model.addAttribute("shopPage", true);
 		return "shop/shop";
 	}
 	
+	//Search product by name
+	@RequestMapping("/search")
+	public String search(Model model, @RequestParam("productName") String name,
+			@PageableDefault(size = 9) Pageable pageable) {
+		
+		Page<ProductDto> page = productService.getProductDtoByNamePaginated(name, pageable);
+		
+		model.addAttribute("page", page);
+		model.addAttribute("categories", categoryService.findAll());
+		
+		System.out.println( "name: "+name);
+		model.addAttribute("productName", name);
+		model.addAttribute("shopPage", true);
+		return "shop/shop";
+	}
+	
+	//Detail product page
 	@GetMapping("/product/{url}")
 	public String productDetail(Model model, @PathVariable("url") String url,
 			@CookieValue(value = "related_product", defaultValue = "") String json,
@@ -72,15 +90,10 @@ public class ShopController {
 		url = url.substring(url.length() - 3);
 		
 		int id = Integer.parseInt(url);
-		
-		Optional<Product> opt = productService.findById(id);
-		Product product = new Product();
-		if(opt != null) product = opt.get();
-		
-		Category category = product.getCategory();
-		
+		Product product = productService.findProductById(id);
+
 		List<ProductDto> relatedProducts = productService.getRelatedProducts(response, json, product);
-		
+		Category category = product.getCategory();
 		
 		model.addAttribute("category", category);
 		model.addAttribute("product", product);

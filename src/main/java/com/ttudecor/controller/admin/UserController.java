@@ -1,9 +1,9 @@
 package com.ttudecor.controller.admin;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +25,10 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private ModelMapper mapper;
+	
+	//Show list users
 	@RequestMapping("")
 	public String show(Model model) {
 		
@@ -36,6 +40,7 @@ public class UserController {
 		return "admin/list-users";
 	}
 	
+	//Add new user
 	@GetMapping("add")
 	public String add(Model model) {
 		UserDto userDto = new UserDto();
@@ -49,56 +54,46 @@ public class UserController {
 	@PostMapping("add")
 	public String add(Model model, @ModelAttribute("user") UserDto userDto,
 			@RequestParam("password") String password,
-			 @RequestParam("rePassword") String rePassword) {
+			@RequestParam("rePassword") String rePassword) {
+	
+		model.addAttribute("user", userDto);
+		model.addAttribute("userManager", true);
 		
-		User user = new User();
-		user = userService.findByEmail(userDto.getEmail());
+		boolean success = userService.register(model, userDto, password, rePassword);
 		
-		if(user != null) {
-			model.addAttribute("message", "Email đã tồn tại, vui lòng chọn email khác.");
-			model.addAttribute("user", userDto);
-			model.addAttribute("userManager", true);
-			return "admin/add-user";
+		if(success) {
+			model.addAttribute("user", new UserDto());
+			model.addAttribute("success", "Thêm mới tài khoản thành công.");
 		}
-		else if(!password.equals(rePassword)) {
-			model.addAttribute("message", "Nhập lại mật khẩu không khớp.");
-			model.addAttribute("user", userDto);
-			model.addAttribute("userManager", true);
-			return "admin/add-user";
-		}
-			
-		else if(password.length() < 6) {
-			model.addAttribute("message", "Mật khẩu tối thiểu 6 ký tự.");
-			model.addAttribute("user", userDto);
-			model.addAttribute("userManager", true);
-			return "admin/add-user";
-		}
-		else {
-			user = new User();
-			user = userService.copy(userDto);
-			
-			Date now = new Date();
-			user.setCreatedDate(now);
-			user.setPassword(password);
-			user.setIsadmin(false);
-			userService.save(user);;;
-			
-			return "redirect:";
-		}
+		return "admin/add-user";
 		
 	}
 	
+	//Detail user
 	@GetMapping("detail/{id}")
-	public String edit(Model model, @PathVariable("id") Integer id) {
+	public String detail(Model model, @PathVariable("id") Integer id) {
 		
 		Optional<User> opt = userService.findById(id);
 		User user = new User();
 		if(opt != null) user = opt.get();
 		
-		UserDto userDto = userService.copy(user);
+		UserDto userDto = mapper.map(user, UserDto.class);
 
 		model.addAttribute("user", userDto);
 		
+		model.addAttribute("userManager", true);
+		return "admin/edit-user";
+	}
+	
+	//Update Rule user
+	@PostMapping("update")
+	public String edit(Model model, @ModelAttribute("user") UserDto userDto) {
+		
+		if(userService.updateRule(userDto.getId(), userDto.isIsadmin()))
+			model.addAttribute("success", "Cập nhật thông tin thành công");
+		else model.addAttribute("message", "Có lỗi xảy ra");
+		
+		model.addAttribute("user", userDto);
 		model.addAttribute("userManager", true);
 		return "admin/edit-user";
 	}

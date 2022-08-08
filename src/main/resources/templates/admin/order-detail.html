@@ -25,8 +25,8 @@
     </head>
     <body>
 
-		<th:block th:insert="/admin/_topbar"></th:block>
-		<th:block th:insert="/admin/_nav"></th:block>
+		<th:block th:insert="admin/_topbar"></th:block>
+		<th:block th:insert="admin/_nav"></th:block>
 
         
         <!-- ============================================================== -->
@@ -51,105 +51,91 @@
                           <p class="text-muted">Xem thông tin chi tiết đơn hàng và quản lý trạng thái đơn hàng</p>
                       </div>
                       <div class="card-body">
-                          
-                          <form method="post" action="/ttu-admin/order-manager/detail/update" 
-                            th:object="${order}" class="form-horizontal">
-                            <div class="row">
-                                <input type="hidden" th:field="*{id}">
-                                <input type="hidden" th:field="*{billCode}">
 
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Họ và tên</label>
-                                        <input type="text" name="fullname" th:field="*{fullname}"
-                                        placeholder="New product name" class="form-control form-control-rounded" readonly>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
+                        <table  style="width:70%">
+                            <tbody>
+                                <tr >
+                                    <td style="width:20%"><strong>Họ và tên: </strong>
+                                    </td> <td th:text="${order.fullname}"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Email: </strong></td> <td th:text="${order.email}"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Số điện thoại: </strong></td> <td th:text="${order.phoneNumber}"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Địa chỉ: </strong></td> <td th:text="${order.address}"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Ghi chú: </strong></td> <td th:text="${order.note}"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Thời gian đặt hàng: </strong></td> <td th:text="${order.orderTime}"></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Trạng thái: </strong></td> 
+                                    <td>
+                                        <form method="post" action="/ttu-admin/order-manager/detail/update" class="form-horizontal">
                                             <div class="form-group">
-                                                <label>Email</label>
-                                                <input type="text" name="email" th:field="*{email}"
-                                                  placeholder="New product name" class="form-control form-control-rounded" readonly>
+                                                <input type="hidden" name="id" th:value="${order.id}">
+                                                <select name="status" class="form-control col-md-6" onchange="this.form.submit()"
+                                                    th:classappend="${order.status == 0} ? label-default : 
+                                                    (${order.status == 1} ? label-warning :
+                                                    (${order.status == 2} ? label-info : 
+                                                    (${order.status == 3} ? label-success :
+                                                    (${order.status == 4} ? label-danger))))">
+        
+                                                    <option value="0" th:selected="${order.status == 0}" 
+                                                        class=" label-default">Chờ xác nhận</option>
+                                                    <option value="1" th:selected="${order.status == 1}"
+                                                        class=" label-warning">Đã xác nhận</option>
+                                                    <option value="2" th:selected="${order.status == 2}"
+                                                        class=" label-info">Đang giao</option>
+                                                    <option value="3" th:selected="${order.status == 3}"
+                                                        class=" label-success">Đã giao</option>
+                                                    <option value="4" th:selected="${order.status == 4}"
+                                                        class=" label-danger">Hủy</option>
+                                                </select>
                                             </div>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <div class="form-group">
-                                                <label>Số điện thoại</label>
-                                                <input type="text" name="phoneNumber" th:field="*{phoneNumber}"
-                                                  placeholder="New product name" class="form-control form-control-rounded" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Địa chỉ</label>
-                                        <input type="text" name="address" th:field="*{address}"
-                                            class="form-control form-control-rounded" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Thời gian đặt hàng</label>
-                                        <input type="date" name="note" th:field="*{orderTime}"
-                                            class="form-control form-control-rounded" readonly>
-                                    </div>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
 
-                                    <div class="form-group">
-                                        <label>Ghi chú</label>
-                                        <input type="text" name="note" th:field="*{note}"
-                                            class="form-control form-control-rounded" readonly>
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <label>Trạng thái</label>
-                                        <select th:field="*{status}" id="" class="form-control">
-
-                                            <option value="0" th:selected="${order.status == 0}" 
-                                                class=" label-default">Chờ xác nhận</option>
-                                            <option value="1" th:selected="${order.status == 1}"
-                                                class=" label-warning">Đã xác nhận</option>
-                                            <option value="2" th:selected="${order.status == 2}"
-                                                class=" label-info">Đang giao</option>
-                                            <option value="3" th:selected="${order.status == 3}"
-                                                class=" label-success">Đã giao</option>
-                                            <option value="4" th:selected="${order.status == 4}"
-                                                class=" label-danger">Hủy</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                        </table>
                             
                             <div class="form-group">
                                 <table class="table table-striped dt-responsive nowrap table-hover">
                                     <thead>
-                                        <th>STT</th>
-                                        <th>Tên sản phẩm</th>
-                                        <th>SL</th>
-                                        <th>Đơn giá</th>
-                                        <th>Thành tiền</th>
+                                        <th class="text-center">STT</th>
+                                        <th class="text-center">Tên sản phẩm</th>
+                                        <th class="text-center">SL</th>
+                                        <th class="text-center">Đơn giá</th>
+                                        <th class="text-center">Thành tiền</th>
                                     </thead>
                                     <tbody>
                                         <tr th:each="item, i : ${orderDetails}">
-                                            <td th:text="${i.count}"></td>
+                                            <td class="text-center" th:text="${i.count}"></td>
                                             <td th:text="${item.product.name}"></td>
-                                            <td th:text="${item.quantity}"></td>
-                                            <td th:text="${item.price}"></td>
-                                            <td th:text="${item.quantity * item.price}"></td>
+                                            <td class="text-center" th:text="${item.quantity}"></td>
+                                            <td class="text-center format-price" th:text="${item.price}"></td>
+                                            <td class="text-center format-price" th:text="${item.quantity * item.price}"></td>
                                         </tr>
                                         <tr>
                                             <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td> <strong th:text="${order.amount}">500.000</strong></td>
+                                            <td class="text-center"> 
+                                                <strong th:text="${order.amount}" class="format-price">500.000</strong>
+                                            </td>
                                         </tr>
                                     </tbody>
 
                                 </table>
                             </div>
 
-
-                            <button type="submit" class="btn btn-success btn-icon"><i class="fa fa-floppy-o "></i>Cập nhật</button>
                             <a href="/ttu-admin/order-manager/" class="btn btn-warning btn-icon"><i class="fa fa-reply"></i>Quay lại</a>	
                                                 
                           </form>

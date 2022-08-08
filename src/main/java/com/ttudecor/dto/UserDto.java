@@ -1,6 +1,6 @@
 package com.ttudecor.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,6 @@ public class UserDto {
 	private String email;
 	private String phoneNumber;
 	private String address;
-	private Date createdDate;
-	private Date lastUpdatedDate;
+	private LocalDateTime createdTime;
 	private boolean isadmin;
 }

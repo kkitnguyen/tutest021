@@ -29,8 +29,8 @@
     </head>
     <body>
 
-		<th:block th:insert="/admin/_topbar"></th:block>
-		<th:block th:insert="/admin/_nav"></th:block>
+		<th:block th:insert="admin/_topbar"></th:block>
+		<th:block th:insert="admin/_nav"></th:block>
 
         
 		<!-- ============================================================== -->
@@ -64,9 +64,6 @@
                                               <strong>Khách hàng</strong>
                                           </th>
                                           <th class="text-center">
-                                              <strong>Email</strong>
-                                          </th>
-                                          <th class="text-center">
                                             <strong>SĐT</strong>
                                           </th>
                                           <th class="text-center">
@@ -87,12 +84,11 @@
                                     
                                       <tr th:each="order: ${orders}" >
                                           <td th:text="${order.id}">0001</td>
-                                          <td th:text="${order.billCode}">TU220701182948</td>
+                                          <td class="text-center" th:text="${order.billCode}">TU220701182948</td>
                                           <td th:text="${order.fullname}">Nguyễn Xuân Khương</td>
-                                          <td th:text="${order.email}">khuong@gmail.com</td>
-                                          <td th:text="${order.phoneNumber}">0989123456</td>
+                                          <td class="text-center" th:text="${order.phoneNumber}">0989123456</td>
                                           
-                                          <td th:text="${order.orderTime}">15/07/2018</td>
+                                          <td class="text-center" th:text="${order.orderTime}">15/07/2018</td>
                                           <td class="text-center">
                                             <form action="/ttu-admin/order-manager/update" method="post">
                                                 <input type="hidden" name="id" th:value="${order.id}">
@@ -116,7 +112,7 @@
                                                 </select>
                                             </form>
                                           </td>
-                                          <td th:text="${order.amount}">---</td>
+                                          <td class="text-center format-price" th:text="${order.amount}">---</td>
                                           <td class="text-center">
                                               <a th:href="@{'/ttu-admin/order-manager/detail/' + ${order.id}}" 
                                                 class="btn btn-sm btn-success"><i class="fa fa-search"></i></a>

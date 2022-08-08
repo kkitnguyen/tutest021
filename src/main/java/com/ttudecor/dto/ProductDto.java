@@ -1,5 +1,6 @@
 package com.ttudecor.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +35,8 @@ public class ProductDto {
 	private int sold;
 	private String image;
 	private String description;
-	private Date createdDate;
+	private LocalDateTime createdTime;
+	private LocalDateTime updatedTime;
 	private boolean isnew;
 	private String url;
 	private int categoryId;

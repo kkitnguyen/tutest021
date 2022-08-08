@@ -1,10 +1,10 @@
 package com.ttudecor.controller.admin;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ttudecor.entity.Feedback;
 import com.ttudecor.repository.FeedbackRepository;
+
+
 
 @Controller
 public class ContactController {
@@ -40,7 +42,7 @@ public class ContactController {
 		fb.setEmail(email);
 		fb.setPhoneNumber(phoneNumber);
 		fb.setMessage(message);
-		fb.setCreatedDate(new Date());
+		fb.setCreatedTime(LocalDateTime.now());
 		
 		feedbackRepository.save(fb);
 		
@@ -63,13 +65,14 @@ public class ContactController {
 	@GetMapping("/ttu-admin/feedback/delete/{id}")
 	public String delete(Model model, @PathVariable("id") int id) {
 		
-		Feedback feedback = new Feedback();
-		Optional<Feedback> opt = feedbackRepository.findById(id);
-		if(opt != null) {
-			feedback = opt.get();
-			feedbackRepository.delete(feedback);
+		try {
+			feedbackRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			System.out.println("Delete error: " + e.getMessage());
+
 		}
 		
 		return "redirect:/ttu-admin/feedback";
 	}
+	
 }

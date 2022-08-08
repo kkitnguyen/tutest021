@@ -1,7 +1,6 @@
 package com.ttudecor.controller;
 
 import java.util.Collection;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ttudecor.dto.CartItemDto;
-import com.ttudecor.entity.Product;
 import com.ttudecor.service.CartService;
-import com.ttudecor.service.ProductService;
 
 @Controller
 @RequestMapping("/cart")
@@ -27,9 +24,6 @@ public class CartController {
 	
 	@Autowired
 	private CartService cartService;
-	
-	@Autowired
-	private ProductService productService;
 	
 	@GetMapping("")
 	public String showAll(Model model,
@@ -56,8 +50,7 @@ public class CartController {
 		int productId = Integer.parseInt(url);
 		
 		cartService.getCartFromCookie(cartJson);
-		for(int i = 0; i< quantity; i++)
-			cartService.add(productId);
+		cartService.add(productId, quantity);
 		
 		cartService.addCartToCookie(response);
 		

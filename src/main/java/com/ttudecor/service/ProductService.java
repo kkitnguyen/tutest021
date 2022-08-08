@@ -1,9 +1,8 @@
 package com.ttudecor.service;
 
 import java.lang.reflect.Type;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -11,6 +10,7 @@ import java.util.Random;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,24 +34,25 @@ import com.ttudecor.utils.UploadUtils;
 @Service
 public class ProductService {
 	private final ProductRepository productRepository;
-	
-	private final CategoryService categoryService;
-	
+
 	private final GalleryService galleryService;
 	
 	private final StringFormatUtils stringFormatUtils;
 	
 	private final UploadUtils uploadUtils;
 	
+	private final ModelMapper mapper;
+	
 	@Autowired
 	public ProductService(ProductRepository productRepository, CategoryService categoryService,
-			GalleryService galleryService, StringFormatUtils stringFormatUtils, UploadUtils uploadUtils) {
+			GalleryService galleryService, StringFormatUtils stringFormatUtils, 
+			UploadUtils uploadUtils, ModelMapper mapper) {
 		super();
 		this.productRepository = productRepository;
-		this.categoryService = categoryService;
 		this.galleryService = galleryService;
 		this.stringFormatUtils = stringFormatUtils;
 		this.uploadUtils = uploadUtils;
+		this.mapper = mapper;
 	}
 
 	public <S extends Product> S save(S entity) {
@@ -65,11 +66,26 @@ public class ProductService {
 	public Optional<Product> findById(Integer id) {
 		return productRepository.findById(id);
 	}
+	
+	public Product findProductById(Integer id) {
+		try {
+			Optional<Product> opt = findById(id);
+			return opt.get();
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
 
 	public void delete(Product entity) {
 		productRepository.delete(entity);
 	}
 	
+	public void deleteById(Integer id) {
+		productRepository.deleteById(id);
+	}
+
 	public Product findByUrlEquals(String url) {
 		return productRepository.findByUrlEquals(url);
 	}
@@ -93,8 +109,54 @@ public class ProductService {
 	public List<Product> findByNameContaining(String name) {
 		return productRepository.findByNameContaining(name);
 	}
-
 	
+	public Page<Product> findByNameContaining(String name, Pageable pageable) {
+		return productRepository.findByNameContaining(name, pageable);
+	}
+
+	//get Page ProductDto
+	public Page<ProductDto> getProductDtoPaginated(Pageable pageable){
+		Page<Product> page = findAll(pageable);
+		
+		Page<ProductDto> pageDto = page.map(p -> {
+			ProductDto dto = new ProductDto();
+			dto = copy(p);
+			return dto;
+		});
+		
+		return pageDto;
+
+	}
+	
+	///get Page ProductDto by categoryId
+	public Page<ProductDto> getProductDtoByCategoryIdPaginated(int categoryId, Pageable pageable){
+		Page<Product> page = findByCategoryId(categoryId, pageable);
+		
+		Page<ProductDto> pageDto = page.map(p -> {
+			ProductDto dto = new ProductDto();
+			dto = copy(p);
+			return dto;
+		});
+		
+		return pageDto;
+
+	}
+	
+	//get Page ProductDto find by name
+	public Page<ProductDto> getProductDtoByNamePaginated(String name, Pageable pageable){
+		Page<Product> page = findByNameContaining(name, pageable);
+		
+		Page<ProductDto> pageDto = page.map(p -> {
+			ProductDto dto = new ProductDto();
+			dto = copy(p);
+			return dto;
+		});
+		
+		return pageDto;
+
+	}
+	
+	//Find a number of ProductDto by categoryId
 	public List<ProductDto> getProductDtoByCategoryIdLimitTo(int categoryId, int limit){
 		Pageable pageable = PageRequest.of(0, limit);
 		
@@ -108,6 +170,7 @@ public class ProductService {
 		return products;
 	}
 	
+	//Find a number of ProductDto
 	public List<ProductDto> getProductDtoLimitTo(int limit){
 		Pageable pageable = PageRequest.of(0, limit);
 		
@@ -121,12 +184,14 @@ public class ProductService {
 		return products;
 	}
 	
+	//Find a number of random ProductDto 
 	public List<ProductDto> getRandomProductLimitTo(int limit){
 		List<ProductDto> list = getAllProductDto();
 		if(limit >= list.size()) return list;
 		
 		List<ProductDto> randomList = new ArrayList<ProductDto>();
 		
+		//Choose a product from list of all products and remove it from list
 		Random rand = new Random();
 		for(int i = 0 ; i< limit ; i++) {
 			int num = rand.nextInt(list.size() - 1);
@@ -138,8 +203,9 @@ public class ProductService {
 		return randomList;
 	}
 	
+	//Find a number of ProductDto sort by product.createdTime
 	public List<ProductDto> findNewestProductLimitTo(int limit){
-		Pageable pageable = PageRequest.of(0, limit, Sort.by(Direction.DESC, "createdDate"));
+		Pageable pageable = PageRequest.of(0, limit, Sort.by(Direction.DESC, "createdTime"));
 		
 		Page<Product> page = findAll(pageable);
 		
@@ -151,6 +217,7 @@ public class ProductService {
 		return newestProducts;
 	}
 	
+	//Find a number of ProductDto sort by product.sold
 	public List<ProductDto> findBestSellerProductLimitTo(int limit){
 		Pageable pageable = PageRequest.of(0, limit, Sort.by(Direction.DESC, "sold"));
 		
@@ -164,6 +231,7 @@ public class ProductService {
 		return products;
 	}
 
+	//Find all Products and map to ProductDto
 	public List<ProductDto> getAllProductDto(){
 		List<Product> list = findAll();
 		
@@ -179,6 +247,7 @@ public class ProductService {
 		return listDto;
 	}
 	
+	//Search Product by name
 	public List<ProductDto> getProductDtoByName(String name){
 		List<Product> list = findByNameContaining(name);
 		
@@ -194,84 +263,104 @@ public class ProductService {
 		return listDto;
 	}
 
+	//Copy properties from ProductDto to Product
 	public Product copy(ProductDto dto) {
 		Product p = new Product();
+		
 		if(dto.getId() != null) {
 			Optional<Product> opt = findById(dto.getId());
 			if(opt != null) p = opt.get();
 		}
 		
+		Category category = new Category();
+		category.setId(dto.getCategoryId());
+		
 		p.setName(dto.getName());
-		p.setDescription(dto.getDescription());
+		p.setCategory(category);
 		p.setPrice(dto.getPrice());
 		p.setDiscountPrice(dto.getDiscountPrice());
 		p.setQuantity(dto.getQuantity());
+		p.setDescription(dto.getDescription());
 		p.setUrl(dto.getUrl());
 		
 		return p;
 	}
 	
+	//Copy properties from Product to ProductDto 
 	public ProductDto copy(Product p) {
-		ProductDto dto = new ProductDto();
-		
-		dto.setId(p.getId());
-		dto.setName(p.getName());
-		dto.setImage(p.getImage());
-		dto.setCreatedDate(p.getCreatedDate());
-		dto.setDescription(p.getDescription());
-		dto.setPrice(p.getPrice());
-		dto.setDiscountPrice(p.getDiscountPrice());
-		dto.setQuantity(p.getQuantity());
-		dto.setSold(p.getSold());
+		ProductDto dto = mapper.map(p, ProductDto.class);
+
 		dto.setCategoryId(p.getCategory().getId());
-		dto.setUrl(p.getUrl());
+
+		LocalDateTime now = LocalDateTime.now();
 		
-		Date now = new Date();
-		Date sevenDaysBefore = new Date(now.getTime() - (1000*24*60*60*7));
-		
-		if(p.getCreatedDate().compareTo(sevenDaysBefore) < 0)
+		//set product is new if product was created in last 15 days
+		if(p.getCreatedTime().isBefore(now.minusDays(15)))
 			dto.setIsnew(false);
+			
 		else dto.setIsnew(true);
 		
 		return dto;
 	}
 	
+	public String createProductUrl(String productName, int productId) {
+		String nameFormat = stringFormatUtils.convertToUrlFomart(productName);
+		String idFormat = "p" + String.format("%03d", productId);
+		
+		return nameFormat + "-" + idFormat;
+	}
+	
+	
+	//Add new product, save image and gallery of product to server
 	public void addProduct(ProductDto dto, MultipartFile image,
 			MultipartFile[] gallery, String uploadPath) {
 		
-		Optional<Category> opt = categoryService.findById(dto.getCategoryId());
-		
 		Product product = copy(dto);
-		product.setCategory(opt.get());
 
-		Date now = new Date();
-		product.setCreatedDate(now);
-		product.setUrl("newurl");
+		product.setCreatedTime(LocalDateTime.now());
 		product.setSold(0);
-		
-		save(product);
+		product.setUrl("newurl");
+		save(product); //save product first time to get id
 		
 		product = findByUrlEquals("newurl");
 		
+		//Create url of product. Ex: product-name-p001
 		String nameFormat = stringFormatUtils.convertToUrlFomart(product.getName());
 		String idFormat = "p" + String.format("%03d", product.getId());
 		String url = nameFormat + "-" + idFormat;
 		
 		product.setUrl(url);
 		
-		String imageSavedName = uploadUtils.uploadImage(image, uploadPath + "\\" + idFormat, idFormat);
-		product.setImage("/images/products/" + idFormat + "/" + imageSavedName);
+		//----- Upload image
+		//Save image if image is uploaded: images/products/p001/p001.jpg
+		if(image.getSize() > 0) {
+			String imageSavedName = uploadUtils.uploadImage(image, uploadPath + "\\" + idFormat, idFormat);
+			product.setImage("/images/products/" + idFormat + "/" + imageSavedName);
+		}
 		
 		save(product);
+		
+		
+		//--------- Upload gallery
+		//true if gallery is uploaded
+		boolean hasGallery = false;
+		for(MultipartFile file : gallery) 
+			if(file.getSize() > 0) {
+				hasGallery = true;
+				break;
+			}
 
-		if(gallery.length > 0) {
+		//Save gallery if gallery is uploaded
+		if(hasGallery) {
+			
+			//   images/products/p001/gallery
 			uploadPath = uploadPath + "\\" + idFormat + "\\" + "gallery";
 			
 			int i = 0;
 			for(MultipartFile file : gallery) {
 				if(file.getSize() > 0) {
 					i++;
-					imageSavedName = uploadUtils.uploadImage(file, uploadPath, idFormat + "-" + i);
+					String imageSavedName = uploadUtils.uploadImage(file, uploadPath, idFormat + "-" + i);
 					Gallery g = new Gallery();
 					g.setProduct(product);
 					g.setImage("/images/products/" + idFormat + "/gallery/" + imageSavedName);
@@ -283,13 +372,12 @@ public class ProductService {
 		
 	}
 	
+	//Update product, save image and gallery of product to server
 	public void updateProduct(ProductDto dto, MultipartFile image,
 			MultipartFile[] gallery, String uploadPath) {
-		
-		Optional<Category> opt = categoryService.findById(dto.getCategoryId());
-		
+
 		Product product = copy(dto);
-		product.setCategory(opt.get());
+		product.setUpdatedTime(LocalDateTime.now());
 
 		String nameFormat = stringFormatUtils.convertToUrlFomart(product.getName());
 		String idFormat = "p" + String.format("%03d", product.getId());
@@ -303,10 +391,19 @@ public class ProductService {
 		}
 		
 		save(product);
-
-		if(gallery.length > 0) {
+		
+		// Upload gallery
+		boolean hasGallery = false;
+		for(MultipartFile file : gallery) 
+			if(file.getSize() > 0) {
+				hasGallery = true;
+				break;
+			}
+		
+		if(hasGallery) {
 			uploadPath = uploadPath + "\\" + idFormat + "\\" + "gallery";
 			
+			//Delete old gallery
 			uploadUtils.deleteFolder(uploadPath);
 			
 			List<Gallery> list = product.getGallery();
@@ -317,7 +414,8 @@ public class ProductService {
 					galleryService.delete(g);
 				}
 			}
-				
+			
+			//Save new gallery
 			int i = 0;
 			for(MultipartFile file : gallery) {
 				if(file.getSize() > 0) {
@@ -333,38 +431,37 @@ public class ProductService {
 		}		
 	}
 
+	//Get list Product from Cookie and save Product to Cookie
 	public List<ProductDto> getRelatedProducts(HttpServletResponse response, String json, Product product) {
+		
+		//---- Get list Product from Cookie
 		json = EncryptionUtils.dencrypt("KEYKEYKEY", json);
 		
 		Gson gson = new Gson();
+		Type type = new TypeToken<List<Integer>>(){}.getType();
+		List<Integer> listId = gson.fromJson(json, type);
 		
-		Type type = new TypeToken<List<String>>(){}.getType();
-		List<String> listUrl = gson.fromJson(json, type);
-		
-		List<ProductDto> list = new ArrayList<ProductDto>();
-		
-		if(listUrl != null) {
-			if(listUrl.size() >= 4 && !listUrl.contains(product.getUrl())) listUrl.remove(0);
-			
-			for(String url : listUrl) {
-				url = url.substring(url.length() - 3);
-				
-				int id = Integer.parseInt(url);
-				
-				Optional<Product> opt = findById(id);
-				Product p = new Product();
-				if(opt != null) p = opt.get();
-				
-				list.add(copy(p));
+		List<ProductDto> listProduct = new ArrayList<ProductDto>();
+
+		if(listId != null) {	
+			for(int id : listId) {
+				Product p = findProductById(id);
+				listProduct.add(copy(p));
 			}
-		}else listUrl = new ArrayList<>();
+		}else listId = new ArrayList<>();
 		
-		if(!listUrl.contains(product.getUrl())) {
-			listUrl.add(product.getUrl());
-			list.add(copy(product));
-		}
 		
-		json = gson.toJson(listUrl);
+		//---- Save Product to Cookie
+		
+		// max size is 4
+		if(listId.size() >= 4 && !listId.contains(product.getId())) 
+			listId.remove(0);
+		
+		//add product to list
+		if(!listId.contains(product.getId())) 
+			listId.add(product.getId());
+		
+		json = gson.toJson(listId);
 		
 		json = EncryptionUtils.encrypt("KEYKEYKEY", json);
 		
@@ -373,7 +470,7 @@ public class ProductService {
 		cookie.setPath("/");
 		response.addCookie(cookie);
 		
-		return list;
+		return listProduct;
 	}
 
 	

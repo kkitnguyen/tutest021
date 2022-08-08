@@ -25,8 +25,8 @@
     </head>
     <body>
 
-		<th:block th:insert="/admin/_topbar"></th:block>
-		<th:block th:insert="/admin/_nav"></th:block>
+		<th:block th:insert="admin/_topbar"></th:block>
+		<th:block th:insert="admin/_nav"></th:block>
 
         
 		<!-- ============================================================== -->
@@ -36,11 +36,13 @@
         <div class="row page-header"></div>
 
         <section class="main-content">
-			<div class="alert bg-success alert-dismissible " role="alert" th:if="${message != null}"> 
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button> 
+			<div class="alert bg-danger alert-dismissible " role="alert" th:if="${message != null}"> 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
 				<strong th:text="${message}"></strong>
+			</div>
+            <div class="alert bg-success alert-dismissible " role="alert" th:if="${success != null}"> 
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
+				<strong th:text="${success}"></strong>
 			</div>
 
             <div class="row">

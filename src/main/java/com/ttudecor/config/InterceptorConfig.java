@@ -23,7 +23,8 @@ public class InterceptorConfig implements WebMvcConfigurer{
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(rememberInterceptor);
+		registry.addInterceptor(rememberInterceptor)
+			.excludePathPatterns("/images/**", "/shop-assets/**", "/assets/**");
 		
 		registry.addInterceptor(adminInterceptor).addPathPatterns("/ttu-admin/**");
 		

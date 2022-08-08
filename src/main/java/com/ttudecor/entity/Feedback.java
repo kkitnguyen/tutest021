@@ -1,6 +1,6 @@
 package com.ttudecor.entity;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,6 +35,5 @@ public class Feedback {
 	@Column(length = 200)
 	private String message;
 	
-	@Temporal(TemporalType.DATE)
-	private Date createdDate;
+	private LocalDateTime createdTime;
 }

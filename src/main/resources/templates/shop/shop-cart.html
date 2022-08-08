@@ -33,7 +33,7 @@
         <div class="loader"></div>
     </div> -->
 
-    <th:block th:insert="/shop/_header"></th:block>
+    <th:block th:insert="shop/_header"></th:block>
 
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
@@ -70,17 +70,19 @@
                             <form action="/cart/update" th:each="item : ${cartItems}" method="post">
                                 <tr>
                                     <td class="cart__product__item" >
-                                        <img style="width: 70px;" th:src="${item.image}" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6 th:text="${item.productName}">Chain bucket bag</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
+                                        <a th:href="@{'/product/' + ${item.url}}">
+                                            <img style="width: 70px;" th:src="${item.image}" alt="">
+                                            <div class="cart__product__item__title">
+                                                <h6 th:text="${item.productName}">Chain bucket bag</h6>
+                                                <div class="rating">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </a>
                                     </td>
                                     <td class="cart__price format-price" th:text="${item.price}">$ 150.0</td>
                                     <input type="hidden" th:value="${item.productId}" name="productId">
@@ -125,8 +127,8 @@
 <!-- Shop Cart Section End -->
 
 
-    <th:block th:insert="/shop/_insta"></th:block>
-    <th:block th:insert="/shop/_footer"></th:block>
+    <th:block th:insert="shop/_insta"></th:block>
+    <th:block th:insert="shop/_footer"></th:block>
 
 <!-- Js Plugins -->
 <script src="/shop-assets/js/jquery-3.3.1.min.js"></script>

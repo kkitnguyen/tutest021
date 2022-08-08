@@ -1,7 +1,7 @@
 package com.ttudecor.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,8 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,11 +42,7 @@ public class User implements Serializable{
 	@Column(length = 200)
 	private String address;
 	
-	@Temporal(TemporalType.DATE)
-	private Date createdDate;
-	
-	@Temporal(TemporalType.DATE)
-	private Date lastUpdatedDate;
+	private LocalDateTime createdTime;
 	
 	@Column(nullable = false)
 	private boolean isadmin;

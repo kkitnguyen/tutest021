@@ -28,8 +28,8 @@
     </head>
     <body>
 
-		<th:block th:insert="/admin/_topbar"></th:block>
-		<th:block th:insert="/admin/_nav"></th:block>
+		<th:block th:insert="admin/_topbar"></th:block>
+		<th:block th:insert="admin/_nav"></th:block>
 
         
         <!-- ============================================================== -->
@@ -40,15 +40,20 @@
          
       <section class="main-content">
 
-          <div class="alert bg-success alert-dismissible " role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> <strong>Success!</strong> Product successfully added. </div>
-
+        <div class="alert bg-danger alert-dismissible " role="alert" th:if="${message != null }"> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
+             <span th:text="${message}"></span>
+        </div>
+        <div class="alert bg-success alert-dismissible " role="alert" th:if="${success != null }"> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
+             <span th:text="${success}"></span>
+        </div>
 
           <div class="row">
               <div class="col">
                   <div class="card">
                       <div class="card-header card-default">
-                          Thêm tài khoản
-                          <p class="text-muted">Nhập thông tin tài khoản</p>
+                          Thông tin tài khoản
                       </div>
                       <div class="card-body">
                           
@@ -58,21 +63,21 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Họ và tên *</label>
+                                        <label>Họ và tên</label>
                                         <input type="text"  th:field="*{fullname}"
                                           placeholder="Họ và tên" class="form-control" readonly>
                                     </div>
                                 
                                     <div class="form-group">
-                                        <label>Email *</label>
+                                        <label>Email</label>
                                         <input type="text"  th:field="*{email}"
                                           placeholder="Email" class="form-control" readonly>
                                     </div>
                                     
                                     <div class="row">
                                         <div class="form-group col-md-6">
-                                            <label>Mật khẩu *</label>
-                                            <input type="password" class="form-control" name="password" id="password" readonly>    	
+                                            <label>Ngày tạo</label>
+                                            <input type="datetime" class="form-control" th:field="*{createdTime}" readonly>    	
                                         </div>
                                     </div>
 
@@ -99,6 +104,7 @@
                                     </div>
                                 </div>
                                 
+                                <input type="hidden" th:field="*{id}">
                             </div>
 
                             <button type="submit" class="btn btn-success btn-icon"><i class="fa fa-floppy-o "></i>Cập nhật</button>

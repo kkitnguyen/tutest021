@@ -1,6 +1,7 @@
 package com.ttudecor.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -50,9 +51,9 @@ public class Product implements Serializable{
 	
 	@Column(nullable = false)
 	private String description;
-	
-	@Temporal(TemporalType.DATE)
-	private Date createdDate;
+
+	private LocalDateTime createdTime;
+	private LocalDateTime updatedTime;
 	
 	@Column(nullable = false, length = 100)
 	private String url;

@@ -28,23 +28,21 @@ public class RememberInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-
+		
 		if(session.getAttribute("fullname") != null) 
 			return true;
 		else {
 			Cookie[] cookies = request.getCookies();
 			
+			if(cookies != null)
 			for(Cookie c : cookies) {
 				if(c.getName().equals("uid")) {
 					String uid = EncryptionUtils.dencrypt("LoginID", c.getValue());
 					
 					try {
 						int userId = Integer.parseInt(uid);
-						
-						Optional<User> opt = userService.findById(userId);
-						User user = new User();
-						if(opt != null) user = opt.get();
-						
+						User user = userService.findUserById(userId);
+
 						session.setAttribute("fullname", user.getFullname());
 						session.setAttribute("userId", user.getId());
 						if(user.isIsadmin()) session.setAttribute("admin", true);

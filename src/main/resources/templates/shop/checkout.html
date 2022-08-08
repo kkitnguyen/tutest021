@@ -33,7 +33,7 @@
         <div class="loader"></div>
     </div> -->
 
-    <th:block th:insert="/shop/_header"></th:block>
+    <th:block th:insert="shop/_header"></th:block>
 
     <!-- Checkout Section Begin -->
     <section class="checkout spad" th:if="${success == null}">
@@ -44,7 +44,7 @@
                     <div class="col-lg-8">
                         <h5>Thông tin nhận hàng</h5>
                         <div class="row">
-                            <input type="hidden" value="0" name="userId" th:field="*{userId}">
+
                             <div class="col-lg-12">
                                 <div class="checkout__form__input">
                                     <p>Họ và tên <span>*</span></p>
@@ -99,7 +99,8 @@
 
                                                 <span th:text="${item.productName}">IN ẢNH RỬA ẢNH 6x9 polaroid</span>
                                             </td>
-                                            <td><span class="format-price" th:text="${item.price}">70.000đ</span></td>
+                                            <td ><span style="font-weight: bold"  class="format-price" 
+                                                th:text="${item.price * item.quantity}">70.000đ</span></td>
                                         </tr>
                                         
                                     </table>
@@ -138,8 +139,8 @@
     </section>
     <!-- Alert Section End -->
 
-    <th:block th:insert="/shop/_insta"></th:block>
-    <th:block th:insert="/shop/_footer"></th:block>
+    <th:block th:insert="shop/_insta"></th:block>
+    <th:block th:insert="shop/_footer"></th:block>
 
 <!-- Js Plugins -->
 <script src="/shop-assets/js/jquery-3.3.1.min.js"></script>

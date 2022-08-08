@@ -36,7 +36,7 @@
     <script th:if="${message != null}">
         alert("[[${message}]]");
     </script>
-    <th:block th:insert="/shop/_header"></th:block>
+    <th:block th:insert="shop/_header"></th:block>
 
     <!-- Profile Section Begin -->
     <section class="shop spad">
@@ -135,7 +135,7 @@
                                         <span value="3" th:if="${order.status == 3}">Đã giao</span>
                                         <span value="4" th:if="${order.status == 4}">Hủy</span>
                                     </td>
-                                    <td th:text="${order.amount}" class="text-center">---</td>
+                                    <td th:text="${order.amount}" class="text-center format-price">---</td>
                                     <td class="text-center">
                                         <a th:href="@{'/profile/order/detail/' + ${order.id}}" 
                                             class="btn btn-sm btn-success"><i class="fa fa-search"></i></a>
@@ -208,8 +208,8 @@
                                         <td th:text="${i.count}" class="text-center">0001</td>
                                         <td th:text="${item.product.name}" ></td>
                                         <td th:text="${item.quantity}" class="text-center"></td>
-                                        <td th:text="${item.price}" class="text-center">50.000đ</td>
-                                        <td th:text="${item.quantity * item.price}" class="text-center">---</td>
+                                        <td th:text="${item.price}" class="text-center format-price">50.000đ</td>
+                                        <td th:text="${item.quantity * item.price}" class="text-center format-price">---</td>
                                     </tr>
                                     
                                     <tr>
@@ -217,7 +217,7 @@
                                         <td></td>
                                         <td></td>
                                         <td class="text-center"><strong>Tổng</strong></td>
-                                        <td class="text-center"> <strong th:text="${order.amount}">500.000</strong></td>
+                                        <td class="text-center"> <strong th:text="${order.amount}" class="format-price">500.000</strong></td>
                                     </tr>
                                 </tbody>
                             </table>  
@@ -265,8 +265,8 @@
     
 
 
-    <th:block th:insert="/shop/_insta"></th:block>
-    <th:block th:insert="/shop/_footer"></th:block>
+    <th:block th:insert="shop/_insta"></th:block>
+    <th:block th:insert="shop/_footer"></th:block>
 
 <!-- Js Plugins -->
 <script src="/shop-assets/js/jquery-3.3.1.min.js"></script>

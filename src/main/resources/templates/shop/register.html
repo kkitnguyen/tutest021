@@ -29,11 +29,11 @@
 
 <body>
     <!-- Page Preloder -->
-    <div id="preloder">
+    <!-- <div id="preloder">
         <div class="loader"></div>
-    </div>
+    </div> -->
 
-    <th:block th:insert="/shop/_header"></th:block>
+    <th:block th:insert="shop/_header"></th:block>
 
 
     <script th:if="${message != null}">
@@ -110,8 +110,8 @@
     </section>
     <!-- Alert Section End -->
 
-    <th:block th:insert="/shop/_insta"></th:block>
-    <th:block th:insert="/shop/_footer"></th:block>
+    <th:block th:insert="shop/_insta"></th:block>
+    <th:block th:insert="shop/_footer"></th:block>
 
 <!-- Js Plugins -->
 <script src="/shop-assets/js/jquery-3.3.1.min.js"></script>

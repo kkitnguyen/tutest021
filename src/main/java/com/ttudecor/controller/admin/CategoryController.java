@@ -1,9 +1,5 @@
 package com.ttudecor.controller.admin;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,11 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ttudecor.dto.CategoryDto;
 import com.ttudecor.entity.Category;
-import com.ttudecor.repository.ProductRepository;
 import com.ttudecor.service.CategoryService;
-import com.ttudecor.utils.StringFormatUtils;
 
 @Controller
 @RequestMapping("/ttu-admin/category-manager")
@@ -25,9 +18,6 @@ public class CategoryController {
 	
 	@Autowired
 	private CategoryService categoryService;
-	
-	@Autowired
-	private StringFormatUtils stringFormatUtils;
 	
 	@RequestMapping("")
 	public String show(Model model) {
@@ -40,28 +30,22 @@ public class CategoryController {
 		return "admin/list-categories";
 	}
 	
+	//Add new category
 	@PostMapping("add")
 	public String add(Model model, @ModelAttribute("category") Category category) {
-		
-		String nameFormat = stringFormatUtils.convertToUrlFomart(category.getName());
-		String idFormat = "c" + String.format("%02d", category.getId());
-		String url = nameFormat + "-" + idFormat;
-		
-		category.setUrl(url);
-		
-		categoryService.save(category);
-		model.addAttribute("message", "Thêm danh mục thành công!");
+		if(categoryService.AddOrUpdateCategory(category))
+			model.addAttribute("success", "Thêm danh mục thành công!");
+		else model.addAttribute("message", "Có lỗi xảy ra.");
 		
 		model.addAttribute("categoryManager", true);
 		return "admin/list-categories";
 	}
 	
+	//Edit category name
 	@GetMapping("edit/{id}")
 	public String edit(Model model, @PathVariable("id") Integer id) {
-		Optional<Category> opt = categoryService.findById(id);
-		Category category = new Category();
-		if(opt != null) category = opt.get();
-
+		Category category = categoryService.findCategoryById(id);
+		
 		model.addAttribute("category", category);
 		model.addAttribute("categoryManager", true);
 		return "admin/edit-category";
@@ -70,28 +54,24 @@ public class CategoryController {
 	@PostMapping("edit")
 	public String update(Model model, @ModelAttribute("category") Category category) {
 		
-		String nameFormat = stringFormatUtils.convertToUrlFomart(category.getName());
-		String idFormat = "c" + String.format("%02d", category.getId());
-		String url = nameFormat + "-" + idFormat;
-		
-		category.setUrl(url);
-		
-		categoryService.save(category);
-		model.addAttribute("message", "Cập nhật danh mục thành công!");
+		if(categoryService.AddOrUpdateCategory(category))
+			model.addAttribute("success", "Cập nhật danh mục thành công!");
+		else model.addAttribute("message", "Có lỗi xảy ra.");
+
 		model.addAttribute("category", category);
-		
 		model.addAttribute("categoryManager", true);
 		return "admin/edit-category";
 	}
 	
+	//Delete category by id
 	@GetMapping("delete/{id}")
 	public String delete(Model model, @PathVariable("id") Integer id) {
-		Optional<Category> opt = categoryService.findById(id);
-		Category category = new Category();
-		if(opt != null) category = opt.get();
+		try {
+			categoryService.deleteById(id);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		
-		
-		categoryService.delete(category);
 		return "redirect:/ttu-admin/category-manager";
 	}
 }

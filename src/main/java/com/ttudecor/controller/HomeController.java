@@ -14,7 +14,7 @@ import com.ttudecor.service.ProductService;
 
 @Controller
 public class HomeController {
-	
+
 	@Autowired
 	private ProductService productService;
 	
@@ -41,4 +41,6 @@ public class HomeController {
 		model.addAttribute("dashboard", true);
 		return "admin/dashboard";
 	}
+	
+	
 }

@@ -28,8 +28,8 @@
     </head>
     <body>
 
-		<th:block th:insert="/admin/_topbar"></th:block>
-		<th:block th:insert="/admin/_nav"></th:block>
+		<th:block th:insert="admin/_topbar"></th:block>
+		<th:block th:insert="admin/_nav"></th:block>
 
         
         <!-- ============================================================== -->
@@ -101,77 +101,84 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Ảnh đại diện</label>
-                                        <div class="fileinput-new" data-provides="fileinput">
-                                            <div class="fileinput-preview" data-trigger="fileinput" style="width: 200px; height:150px;"></div>
-                                            <span class="btn btn-primary  btn-file">
-                                                <span class="fileinput-new">Chọn</span>
-                                                <span class="fileinput-exists">Chọn ảnh khác</span>
-                                                <input type="file" name="imageFile">
-                                            </span>
-                                            <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput">Xóa</a>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Ảnh đại diện</label>
+                                                <div class="fileinput-new" data-provides="fileinput">
+                                                    <div class="fileinput-preview" data-trigger="fileinput" style="width: 200px; height:150px;"></div>
+                                                    <span class="btn btn-primary  btn-file">
+                                                        <span class="fileinput-new">Chọn</span>
+                                                        <span class="fileinput-exists">Chọn ảnh khác</span>
+                                                        <input type="file" name="imageFile">
+                                                    </span>
+                                                    <a href="#" class="btn btn-danger fileinput-exists" data-dismiss="fileinput">Xóa</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label>Ảnh sản phẩm</label>
+                                                <div class="fileinput fileinput-new input-group " data-provides="fileinput">
+                                                      <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
+                                                      <span class="input-group-addon btn btn-primary btn-file ">
+                                                      <span class="fileinput-new">Chọn</span>
+                                                      <span class="fileinput-exists">Khac</span>
+                                                      <input type="file" name ="gallery" >
+                                                      </span>
+                                                      <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                                </div>
+                                                <div class="fileinput fileinput-new input-group " data-provides="fileinput">
+                                                      <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
+                                                      <span class="input-group-addon btn btn-primary btn-file ">
+                                                      <span class="fileinput-new">Chọn</span>
+                                                      <span class="fileinput-exists">Khac</span>
+                                                      <input type="file" name ="gallery" >
+                                                      </span>
+                                                      <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                                </div>
+                                                <div class="fileinput fileinput-new input-group " data-provides="fileinput">
+                                                    <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
+                                                    <span class="input-group-addon btn btn-primary btn-file ">
+                                                    <span class="fileinput-new">Chọn</span>
+                                                    <span class="fileinput-exists">Khac</span>
+                                                    <input type="file" name ="gallery" >
+                                                    </span>
+                                                    <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                                </div>
+                                                <div class="fileinput fileinput-new input-group " data-provides="fileinput">
+                                                    <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
+                                                    <span class="input-group-addon btn btn-primary btn-file ">
+                                                    <span class="fileinput-new">Chọn</span>
+                                                    <span class="fileinput-exists">Khac</span>
+                                                    <input type="file" name ="gallery" >
+                                                    </span>
+                                                    <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                                </div>
+                                                <div class="fileinput fileinput-new input-group " data-provides="fileinput">
+                                                    <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
+                                                    <span class="input-group-addon btn btn-primary btn-file ">
+                                                    <span class="fileinput-new">Chọn</span>
+                                                    <span class="fileinput-exists">Khac</span>
+                                                    <input type="file" name ="gallery" >
+                                                    </span>
+                                                    <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                                </div>
+                                                <div class="fileinput fileinput-new input-group " data-provides="fileinput">
+                                                    <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
+                                                    <span class="input-group-addon btn btn-primary btn-file ">
+                                                    <span class="fileinput-new">Chọn</span>
+                                                    <span class="fileinput-exists">Khac</span>
+                                                    <input type="file" name ="gallery" >
+                                                    </span>
+                                                    <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                                </div>
+                                                
+                                            </div>
                                         </div>
                                     </div>
-  
-                                    <div class="form-group">
-                                        <label>Ảnh sản phẩm</label>
-                                        <div class="fileinput fileinput-new input-group col-md-6" data-provides="fileinput">
-                                              <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
-                                              <span class="input-group-addon btn btn-primary btn-file ">
-                                              <span class="fileinput-new">Chọn</span>
-                                              <span class="fileinput-exists">Khac</span>
-                                              <input type="file" name ="gallery" >
-                                              </span>
-                                              <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
-                                        </div>
-                                        <div class="fileinput fileinput-new input-group col-md-6" data-provides="fileinput">
-                                              <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
-                                              <span class="input-group-addon btn btn-primary btn-file ">
-                                              <span class="fileinput-new">Chọn</span>
-                                              <span class="fileinput-exists">Khac</span>
-                                              <input type="file" name ="gallery" >
-                                              </span>
-                                              <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
-                                        </div>
-                                        <div class="fileinput fileinput-new input-group col-md-6" data-provides="fileinput">
-                                            <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
-                                            <span class="input-group-addon btn btn-primary btn-file ">
-                                            <span class="fileinput-new">Chọn</span>
-                                            <span class="fileinput-exists">Khac</span>
-                                            <input type="file" name ="gallery" >
-                                            </span>
-                                            <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
-                                        </div>
-                                        <div class="fileinput fileinput-new input-group col-md-6" data-provides="fileinput">
-                                            <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
-                                            <span class="input-group-addon btn btn-primary btn-file ">
-                                            <span class="fileinput-new">Chọn</span>
-                                            <span class="fileinput-exists">Khac</span>
-                                            <input type="file" name ="gallery" >
-                                            </span>
-                                            <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
-                                        </div>
-                                        <div class="fileinput fileinput-new input-group col-md-6" data-provides="fileinput">
-                                            <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
-                                            <span class="input-group-addon btn btn-primary btn-file ">
-                                            <span class="fileinput-new">Chọn</span>
-                                            <span class="fileinput-exists">Khac</span>
-                                            <input type="file" name ="gallery" >
-                                            </span>
-                                            <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
-                                        </div>
-                                        <div class="fileinput fileinput-new input-group col-md-6" data-provides="fileinput">
-                                            <div class="form-control" data-trigger="fileinput"><span class="fileinput-filename"></span></div>
-                                            <span class="input-group-addon btn btn-primary btn-file ">
-                                            <span class="fileinput-new">Chọn</span>
-                                            <span class="fileinput-exists">Khac</span>
-                                            <input type="file" name ="gallery" >
-                                            </span>
-                                            <a href="#" class="input-group-addon btn btn-danger  hover fileinput-exists" data-dismiss="fileinput">Remove</a>
-                                        </div>
-                                        
-                                    </div>
+            
   
                                 </div>
                             </div>

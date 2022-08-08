@@ -38,3 +38,13 @@
     $('[data-toggle="popover"]').popover();
   
 })(jQuery);
+
+
+var collection = document.getElementsByClassName("format-price");
+for(var i = 0; i < collection.length ; i++){
+    var item = collection[i];
+    var price = item.innerHTML;
+
+    var newPrice = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+    item.innerHTML = newPrice;
+}

@@ -38,15 +38,16 @@
                                 <ul class="dropdown">
                                     <li><a href="/shop/in-anh-theo-yeu-cau-c01">In ảnh theo yêu cầu</a></li>
                                     <li><a href="/shop/album-anh-phu-kien-c02">Dây đèn, album ảnh, phụ kiện</a></li>
-                                    <li><a href="/shop/do-dung-decor-c04">Đồ decor</a></li>
-                                    <li><a href="#">Decor bàn học, văn phòng</a></li>
-                                    <li><a href="#">Postcard</a></li>
+                                    <li><a href="/shop/do-dung-decor-c03">Đồ dùng decor</a></li>
+                                    <li><a href="/shop/lich-de-ban-c04">Lịch để bàn</a></li>
+                                    <li><a href="/shop/postcard-c05">Postcard</a></li>
                                 </ul>
                             </li>
                             <li th:classappend="${shopPage } ? 'active'"><a href="/shop">Cửa hàng</a></li>
                             <li><a href="#">Mẹo decor</a></li>
                             <li><a href="#">Blog</a></li>
                             <li th:classappend="${contactPage } ? 'active'"><a href="/contact">Liên hệ</a></li>
+                            <li th:if="${session.admin}"><a href="/ttu-admin" style="color: red;">Admin</a></li>
                         </ul>
                     </nav>
                 </div>

@@ -29,8 +29,8 @@
     </head>
     <body>
 
-		<th:block th:insert="/admin/_topbar"></th:block>
-		<th:block th:insert="/admin/_nav"></th:block>
+		<th:block th:insert="admin/_topbar"></th:block>
+		<th:block th:insert="admin/_nav"></th:block>
 
         
 		<!-- ============================================================== -->
@@ -71,7 +71,7 @@
                                               <strong>Price</strong>
                                           </th>
                                           <th class="text-center">
-                                            <strong>Discount Price</strong>
+                                            <strong>Discount</strong>
                                           </th>
                                           <th class="text-center">
                                               <strong>Stock</strong>
@@ -92,12 +92,12 @@
                                           <td th:text="${product.id}">0001</td>
                                           <td th:text="${product.name}">Product 1</td>
                                           <td th:text="${product.category.name}">Album, phu kien</td>
-                                          <td th:text="${product.price}">$ 12.20</td>
-                                          <td th:text="${product.discountPrice}">$ 10.20</td>
+                                          <td class="text-center format-price" th:text="${product.price}">$ 12.20</td>
+                                          <td class="text-center format-price" th:text="${product.discountPrice}">$ 10.20</td>
                                           <td class="text-center">
                                               <span class="label label-success" th:text="${product.quantity}">Stock</span>
                                           </td>
-                                          <td th:text="${product.createdDate}">15/07/2018</td>
+                                          <td th:text="${product.createdTime}">15/07/2018</td>
                                           <td>
                                             <img class="img-fluid" th:src="${product.image}">
                                           </td>

@@ -29,8 +29,8 @@
     </head>
     <body>
 
-		<th:block th:insert="/admin/_topbar"></th:block>
-		<th:block th:insert="/admin/_nav"></th:block>
+		<th:block th:insert="admin/_topbar"></th:block>
+		<th:block th:insert="admin/_nav"></th:block>
 
         
 		<!-- ============================================================== -->
@@ -84,10 +84,10 @@
                                   <tbody>
                                     
                                       <tr th:each="user: ${users}" >
-                                          <td th:text="${user.id}">0001</td>
+                                          <td class="text-center" th:text="${user.id}">0001</td>
                                           <td th:text="${user.fullname}">Nguyễn Xuân Khương</td>
                                           <td th:text="${user.email}">khuong@gmail.com</td>
-                                          <td th:text="${user.phoneNumber}">0989123456</td>
+                                          <td class="text-center" th:text="${user.phoneNumber}">0989123456</td>
                                           <td th:text="${user.address}">Hà Nội</td>
 
                                           <td class="text-center">
