@@ -1,5 +1,6 @@
 package com.ttudecor.service;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -334,7 +335,9 @@ public class ProductService {
 		//----- Upload image
 		//Save image if image is uploaded: images/products/p001/p001.jpg
 		if(image.getSize() > 0) {
-			String imageSavedName = uploadUtils.uploadImage(image, uploadPath + "\\" + idFormat, idFormat);
+			String imageSavedName = uploadUtils.uploadImage(image, uploadPath + File.separator + idFormat, idFormat);
+			
+			System.out.println("File separator ---------------------------: " + File.separator);
 			product.setImage("/images/products/" + idFormat + "/" + imageSavedName);
 		}
 		
@@ -354,7 +357,7 @@ public class ProductService {
 		if(hasGallery) {
 			
 			//   images/products/p001/gallery
-			uploadPath = uploadPath + "\\" + idFormat + "\\" + "gallery";
+			uploadPath = uploadPath + File.separator + idFormat + File.separator + "gallery";
 			
 			int i = 0;
 			for(MultipartFile file : gallery) {
@@ -386,7 +389,7 @@ public class ProductService {
 		product.setUrl(url);
 		
 		if(image.getSize() > 0) {
-			String imageSavedName = uploadUtils.uploadImage(image, uploadPath + "\\" + idFormat, idFormat);
+			String imageSavedName = uploadUtils.uploadImage(image, uploadPath + File.separator + idFormat, idFormat);
 			product.setImage("/images/products/" + idFormat + "/" + imageSavedName);
 		}
 		
@@ -401,7 +404,7 @@ public class ProductService {
 			}
 		
 		if(hasGallery) {
-			uploadPath = uploadPath + "\\" + idFormat + "\\" + "gallery";
+			uploadPath = uploadPath + File.separator + idFormat + File.separator + "gallery";
 			
 			//Delete old gallery
 			uploadUtils.deleteFolder(uploadPath);

@@ -1,5 +1,6 @@
 package com.ttudecor.controller.admin;
 
+import java.io.File;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,7 +62,7 @@ public class ProductController {
 			@RequestParam(name = "imageFile", required = false) MultipartFile image,
 			@RequestParam(name = "gallery", required = false) MultipartFile[] gallery ) {
 		
-		String uploadPath = request.getServletContext().getRealPath("images\\products");
+		String uploadPath = request.getServletContext().getRealPath("images" + File.separator + "products");
 		productService.addProduct(productDto, image, gallery, uploadPath);
 		
 		return "redirect:";
@@ -89,7 +90,7 @@ public class ProductController {
 			@RequestParam(name = "imageFile", required = false) MultipartFile image,
 			@RequestParam(name = "gallery", required = false) MultipartFile[] gallery) {
 		
-		String uploadPath = request.getServletContext().getRealPath("images\\products");
+		String uploadPath = request.getServletContext().getRealPath("images" + File.separator + "products");
 		productService.updateProduct(productDto, image, gallery, uploadPath);
 		
 		return "redirect:/ttu-admin/product-manager/edit/" + productDto.getId();
