@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +55,15 @@ public class UserService {
 	}
 	
 	public User findByEmailAndPassword(String email, String password) {
-		return userRepository.findByEmailAndPassword(email, password);
+		User user = findByEmail(email);
+		
+		if(user != null) {
+			boolean correct = BCrypt.checkpw(password, user.getPassword());
+			
+			if(correct) return user;
+		}
+		
+		return null;
 	}
 
 	public User findByEmail(String email) {
@@ -110,7 +119,9 @@ public class UserService {
 			user = mapper.map(userDto, User.class);
 			
 			user.setCreatedTime(LocalDateTime.now());
-			user.setPassword(password);
+			
+			String hassPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+			user.setPassword(hassPassword);
 			save(user);
 			
 			return true;
@@ -152,18 +163,20 @@ public class UserService {
 	public boolean changePassword(Model model, int userId, String oldPassword, 
 			String password, String rePassword) {
 		try {
-			Optional<User> opt = findById(userId);
-			User user = new User();
-			if(opt != null) user = opt.get();
+			User user = findUserById(userId);
 			
-			if(!user.getPassword().equals(oldPassword)) 
+			boolean correct = BCrypt.checkpw(oldPassword, user.getPassword());
+			
+			if(!correct) 
 				model.addAttribute("message", "Nhập sai mật khẩu cũ");
 			else if(!rePassword.equals(password))
 				model.addAttribute("message", "Nhập lại mật khẩu không khớp");
 			else if(password.length() < 6)
 				model.addAttribute("message", "Mật khẩu tối thiểu 6 ký tự");
 			else {
-				user.setPassword(password);
+				String hassPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+				user.setPassword(hassPassword);
+				
 				save(user);
 				model.addAttribute("message", "Đổi mật khẩu thành công");
 				return true;
