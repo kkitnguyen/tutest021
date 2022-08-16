@@ -85,8 +85,9 @@
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
-                            <span>( 138 reviews )</span>
+                            <!-- <span>( 138 reviews )</span> -->
                         </div>
+
                         <div class="product__details__price" th:if="${product.discountPrice} > 0"> 
                             <span class="discount-price format-price" th:text="${product.discountPrice}" ></span>
                             <span class="o-price format-price" th:text="${product.price}" > 39.000 đ</span>
@@ -128,19 +129,18 @@
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Mô tả sản phẩm</a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Specification</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab">Reviews ( 0 )</a>
-                            </li>
+                            </li> -->
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                                <h6>Mô tả sản phẩm</h6>
                                 <div th:utext="${product.description}"> </div>
                             </div>
-                            <div class="tab-pane" id="tabs-2" role="tabpanel">
+                            <!-- <div class="tab-pane" id="tabs-2" role="tabpanel">
                                 <h6>Specification</h6>
                                 <p th:text="${product.name}">Nemo enim ipsam voluptat</p>
                             </div>
@@ -148,7 +148,7 @@
                                 <h6>Reviews ( 0 )</h6>
                                 <p></p>
                                
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

@@ -14,9 +14,13 @@
             <a href="/home"><img src="/shop-assets/img/logo-header.png" alt=""></a>
         </div>
         <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__auth">
+        <div class="offcanvas__auth" th:if="${session.fullname == null}">
             <a href="/login">Đăng nhập</a>
             <a href="/register">Đăng ký</a>
+        </div>
+        <div class="offcanvas__auth" th:if="${session.fullname != null}">
+            <b><a href="/profile" th:text="${session.fullname}"></a></b>
+            <a href="/logout">/ Đăng xuất</a>
         </div>
     </div>
     <!-- Offcanvas Menu End -->
@@ -34,7 +38,8 @@
                     <nav class="header__menu">
                         <ul>
                             <li class="" th:classappend="${homePage } ? 'active'"><a href="/home">Home</a></li>
-                            <li ><a href="/shop">Danh mục</a>
+                            <li class="" th:classappend="${aboutUsPage } ? 'active'"><a href="/about-us">Về ttu.decor</a></li>
+                            <li th:classappend="${shopPage } ? 'active'"><a href="/shop">Cửa hàng</a>
                                 <ul class="dropdown">
                                     <li><a href="/shop/in-anh-theo-yeu-cau-c01">In ảnh theo yêu cầu</a></li>
                                     <li><a href="/shop/album-anh-phu-kien-c02">Dây đèn, album ảnh, phụ kiện</a></li>
@@ -43,9 +48,7 @@
                                     <li><a href="/shop/postcard-c05">Postcard</a></li>
                                 </ul>
                             </li>
-                            <li th:classappend="${shopPage } ? 'active'"><a href="/shop">Cửa hàng</a></li>
-                            <li><a href="#">Mẹo decor</a></li>
-                            <li><a href="#">Blog</a></li>
+                            <li th:classappend="${blogPage } ? 'active'"><a href="/blog">Blog</a></li>
                             <li th:classappend="${contactPage } ? 'active'"><a href="/contact">Liên hệ</a></li>
                             <li th:if="${session.admin}"><a href="/ttu-admin" style="color: red;">Admin</a></li>
                         </ul>
