@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:if="${category == null}"> 5 mẹo trang trí nhà cửa giúp bạn hạnh phúc hơn</title>
+    <title th:if="${category != null}" th:text="${category.name}"></title>
+
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/shop-assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/style.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <!-- <div id="preloder">
+        <div class="loader"></div>
+    </div> -->
+
+    <th:block th:insert="shop/_header"></th:block>
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/home"><i class="fa fa-home"></i> Home</a>
+                        <a href="/blog"> Blog</a>
+                        <span >5 mẹo trang trí nhà cửa giúp bạn hạnh phúc hơn</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Blog Details Section Begin -->
+    <section class="blog-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8">
+                    <div class="blog__details__content">
+                        <div class="blog__details__item">
+                            <img src="/shop-assets/img/categories/category-1.jpg" alt="">
+                            <div class="blog__details__item__title">
+                                <span class="tip">Blog</span>
+                                <h4>5 mẹo trang trí nhà cửa giúp bạn hạnh phúc hơn</h4>
+                                <ul>
+                                    <li>by <span>ttu.decor</span></li>
+                                    <li>Aug 08, 2022</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="blog__details__desc">
+                            <p>Trong một thế giới đầy stress và những tin tức tiêu cực hàng ngày, nỗi buồn phiền và lo âu bủa vây quanh ta. Giữa chốn bề
+                                bộn ấy, ngôi nhà phải thực sự là nơi giúp chúng ta thư giãn sau mỗi ngày bận rộn. Không gian sống cũng tác động mạnh
+                                đến tâm trí của bạn.</p>
+                            <p>Đầu tiên, căn nhà phải sạch. Một căn nhà sạch, đẹp luôn khiến chúng ta thư thái hơn là chốn bừa bộn, cẩu thả. Tiếp
+                                theo, nó cần được trang trí với những sản phẩm nội thất giúp chúng ta thả lỏng tinh thần. Nhà thiết kế nội thất Amy
+                                Brandhorst đến từ Berlin, Đức, đã làm việc với chuyên viên tâm lý Eleftheria để tìm hiểu xem chúng ta nên trang trí
+                                nhà cửa như thế nào để tạo niềm vui trong cuộc sống.</p>
+                        </div>
+
+                        <div class="blog__details__desc">
+                            <h5><b>1. Chọn những đồ vật trang trí có hình tròn</b></h5>
+                            <p>Nghiên cứu khoa học cho thấy hình dáng vuông, tròn có ảnh hưởng sâu sắc đến tâm tình chúng ta. Những hình dáng tròn
+                                trịa tạo suy nghĩ tích cực. Còn sản phẩm có hình cầu 3D tạo cảm giác cân bằng. Vì vậy, những sản phẩm trang trí nội
+                                thất hình cầu đặc biệt tốt để giúp người hay lo lắng giải tỏa tâm trạng lo âu.</p>
+                                <img src="/shop-assets/img/categories/category-1.jpg" alt="">
+                            <p> <b>Ý tưởng cho bạn:</b> Gương treo tường tròn; đèn ngủ hình cầu; bàn cà-phê có góc bo tròn; chậu cây hình bầu.</p>
+                        </div>
+                        
+                        <div class="blog__details__desc">
+                            <h5><b>2. Trang trí nhà màu xanh dương</b></h5>
+                            <p>Trong bảng màu, xanh dương mang lại sự tin tưởng, tạo vẻ an yên. Khoa học chứng minh rằng màu xanh dương còn có khả
+                                năng giảm huyết áp. Chẳng vì vậy mà các tập đoàn tài chính luôn dùng màu xanh dương trong logo và thiết kế nội thất
+                                của họ. Học mẹo này và trang trí nhà màu xanh dương để giúp bản thân thư giãn mỗi khi về nhà.</p>
+                            <img src="/shop-assets/img/categories/category-2.jpg" alt="">
+                            <p> <b>Ý tưởng cho bạn:</b> Nếu như đang muốn làm mới lại căn nhà, hãy thử sơn tường màu xanh. Nếu không, hãy thử trang
+                                trí nhà màu xanh dương từ những vật decor nho nhỏ như gối và bộ trải giường màu xanh; hay tranh treo tường mang sắc
+                                thái của biển và trời.</p>
+                        </div>
+
+                        <div class="blog__details__desc">
+                            <h5><b>3. Tạo nhiều nguồn sáng cho không gian sống</b></h5>
+                            <p>Bạn có biết: Tại những quốc gia ở cực Bắc hay cực Nam, cứ mỗi khi mùa đông về, cư dân tại đây bị mắc căn bệnh trầm
+                                buồn vu vơ gọi là hội chứng SAD? Đây là bởi vì ngày mùa đông của họ tối tăm, thiếu ánh sáng tự nhiên. Cảm giác u
+                                buồn vì thiếu ánh sáng là một trong những tiền đề tạo nên căn bệnh trầm cảm. Chẳng vì vậy mà lối thiết kế nội thất
+                                Bắc Âu luôn tìm cách tạo nhiều nguồn sáng cho ngôi nhà để tạo sự phấn chấn cho chủ nhân.
+                            
+                                Tuy nhiên, ở những không gian cần tạo sự thân mật, hãy chọn loại đèn có thể giảm mức độ sáng. Nguồn ánh sáng dịu nhẹ
+                                cũng tốt hơn là ánh sáng chói để tạo không gian thư giãn cuối ngày.</p>
+                            <img src="/shop-assets/img/categories/category-3.jpg" alt="">
+                            <p> <b>Ý tưởng cho bạn:</b> Ngoài việc lắp ráp thêm đèn, bạn có thể thêm gương hay các đồ vật ánh kim để giúp phản chiếu
+                                ánh sáng tốt hơn.</p>
+                        </div>
+
+                        <div class="blog__details__desc">
+                            <h5><b>4. Để ý đến những điểm không thể thấy bằng mắt thường</b></h5>
+                            <p>Chúng ta có nhiều giác quan. Căn nhà nên giúp tất cả các giác quan ấy thư giãn, thay vì chỉ thị giác. Hãy để những
+                                giác quan này nói lên cách thư giãn của bạn. Bạn thích cảm giác sạch của chân trần trên sàn gỗ, hay cảm giác ấm áp
+                                của thảm? Bạn mê hương hoa hồng hay hương lavender? Mỗi người một khác. Hãy tìm combo thư giãn của riêng bạn.</p>
+                            <img src="/shop-assets/img/categories/category-4.jpg" alt="">
+                            <p> <b>Ý tưởng cho bạn:</b> Để thư giãn bằng khứu giác, hãy tìm đến liệu pháp mùi hương. Bạn có thể đốt đèn cầy hay dùng
+                                máy xông tinh dầu. Để thoả mãn xúc giác, hãy thêm những chất liệu mềm mại vào không gian sống của bạn. Chăn màn lụa
+                                tơ tằm, chăn phủ bằng len, hay gối ôm bằng nhung.</p>
+                        </div>
+                        
+                        <div class="blog__details__desc">
+                            <h5><b>5. Tăng cường nội thất bằng chất liệu thiên nhiên</b></h5>
+                            <p>Cuộc sống bị kẹt giữa bốn bức tường xi-măng thành thị có thể khiến chúng ta cảm thấy ngạt thở. Hãy mang những đồ
+                                trang trí nội thất bằng chất liệu thiên nhiên như gỗ mộc, mây tre lá, vải lanh vào nhà. Không chỉ đơn giản là theo
+                                sát trào lưu sống xanh. Vật liệu thiên nhiên còn giúp tinh thần chúng ta thả lỏng vì gợi nhớ cảm giác đằm mình trong
+                                thiên nhiên ngoài trời</p>
+                            <img src="/shop-assets/img/categories/category-5.jpg" alt="">
+                            <p> <b>Ý tưởng cho bạn:</b>Thêm ghế mây; thay thế thảm bằng cói chiếu; mang chậu cây xanh và cắm hoa
+                                tươi trong nhà. Bạn cũng có thể dán giấy dán tường hoạ tiết thiên nhiên như cọ nhiệt đới, hoa trang nhã hay cây cỏ.
+                            </p>
+                        </div>
+
+                        <!-- <div class="blog__details__tags">
+                            <a href="#">Fashion</a>
+                            <a href="#">Street style</a>
+                            <a href="#">Diversity</a>
+                            <a href="#">Beauty</a>
+                        </div> -->
+
+                        <!-- <div class="blog__details__btns">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="blog__details__btn__item">
+                                        <h6><a href="#"><i class="fa fa-angle-left"></i> Previous posts</a></h6>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <div class="blog__details__btn__item blog__details__btn__item--next">
+                                        <h6><a href="#">Next posts <i class="fa fa-angle-right"></i></a></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        
+                        <!-- <div class="blog__details__comment">
+                            <h5>3 Comment</h5>
+                            <a href="#" class="leave-btn">Leave a comment</a>
+                            <div class="blog__comment__item">
+                                <div class="blog__comment__item__pic">
+                                    <img src="img/blog/details/comment-1.jpg" alt="">
+                                </div>
+                                <div class="blog__comment__item__text">
+                                    <h6>Brandon Kelley</h6>
+                                    <p>Duis voluptatum. Id vis consequat consetetur dissentiet, ceteros commune perpetua
+                                    mei et. Simul viderer facilisis egimus tractatos splendi.</p>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Seb 17, 2019</li>
+                                        <li><i class="fa fa-heart-o"></i> 12</li>
+                                        <li><i class="fa fa-share"></i> 1</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="blog__comment__item blog__comment__item--reply">
+                                <div class="blog__comment__item__pic">
+                                    <img src="img/blog/details/comment-2.jpg" alt="">
+                                </div>
+                                <div class="blog__comment__item__text">
+                                    <h6>Brandon Kelley</h6>
+                                    <p>Consequat consetetur dissentiet, ceteros commune perpetua mei et. Simul viderer
+                                    facilisis egimus ulla mcorper.</p>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Seb 17, 2019</li>
+                                        <li><i class="fa fa-heart-o"></i> 12</li>
+                                        <li><i class="fa fa-share"></i> 1</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="blog__comment__item">
+                                <div class="blog__comment__item__pic">
+                                    <img src="img/blog/details/comment-3.jpg" alt="">
+                                </div>
+                                <div class="blog__comment__item__text">
+                                    <h6>Brandon Kelley</h6>
+                                    <p>Duis voluptatum. Id vis consequat consetetur dissentiet, ceteros commune perpetua
+                                    mei et. Simul viderer facilisis egimus tractatos splendi.</p>
+                                    <ul>
+                                        <li><i class="fa fa-clock-o"></i> Seb 17, 2019</li>
+                                        <li><i class="fa fa-heart-o"></i> 12</li>
+                                        <li><i class="fa fa-share"></i> 1</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> -->
+                    
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-4">
+                    <div class="blog__sidebar">
+                        <!-- <div class="blog__sidebar__item">
+                            <div class="section-title">
+                                <h4>Danh mục</h4>
+                            </div>
+                            <ul>
+                                <li><a href="#">All <span>(250)</span></a></li>
+                                <li><a href="#">Fashion week <span>(80)</span></a></li>
+                                <li><a href="#">Street style <span>(75)</span></a></li>
+                                <li><a href="#">Lifestyle <span>(35)</span></a></li>
+                                <li><a href="#">Beauty <span>(60)</span></a></li>
+                            </ul>
+                        </div> -->
+
+                        <div class="blog__sidebar__item">
+                            <div class="section-title">
+                                <h4>Bài viết gần đây</h4>
+                            </div>
+                            <a href="#" class="blog__feature__item">
+                                <div class="blog__feature__item__pic">
+                                    <img src="/shop-assets/img/categories/cat.jpg" alt="">
+                                </div>
+                                <div class="blog__feature__item__text">
+                                    <h6>5 mẹo trang trí nhà cửa giúp bạn hạnh phúc hơn</h6>
+                                    <span>Aug 08, 2022</span>
+                                </div>
+                            </a>
+                            <a href="#" class="blog__feature__item">
+                                <div class="blog__feature__item__pic">
+                                    <img src="/shop-assets/img/categories/cat.jpg" alt="">
+                                </div>
+                                <div class="blog__feature__item__text">
+                                    <h6>5 mẹo trang trí nhà cửa giúp bạn hạnh phúc hơn</h6>
+                                    <span>Aug 08, 2022</span>
+                                </div>
+                            </a>
+                            <a href="#" class="blog__feature__item">
+                                <div class="blog__feature__item__pic">
+                                    <img src="/shop-assets/img/categories/cat.jpg" alt="">
+                                </div>
+                                <div class="blog__feature__item__text">
+                                    <h6>5 mẹo trang trí nhà cửa giúp bạn hạnh phúc hơn</h6>
+                                    <span>Aug 08, 2022</span>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- <div class="blog__sidebar__item">
+                            <div class="section-title">
+                                <h4>Tags cloud</h4>
+                            </div>
+                            <div class="blog__sidebar__tags">
+                                <a href="#">Fashion</a>
+                                <a href="#">Street style</a>
+                                <a href="#">Diversity</a>
+                                <a href="#">Beauty</a>
+                            </div>
+                        </div> -->
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Blog Details Section End -->
+
+
+    <th:block th:insert="shop/_insta"></th:block>
+    <th:block th:insert="shop/_footer"></th:block>
+
+<!-- Js Plugins -->
+<script src="/shop-assets/js/jquery-3.3.1.min.js"></script>
+<script src="/shop-assets/js/bootstrap.min.js"></script>
+<script src="/shop-assets/js/jquery.magnific-popup.min.js"></script>
+<script src="/shop-assets/js/jquery-ui.min.js"></script>
+<script src="/shop-assets/js/mixitup.min.js"></script>
+<script src="/shop-assets/js/jquery.countdown.min.js"></script>
+<script src="/shop-assets/js/jquery.slicknav.js"></script>
+<script src="/shop-assets/js/owl.carousel.min.js"></script>
+<script src="/shop-assets/js/jquery.nicescroll.min.js"></script>
+<script src="/shop-assets/js/main.js"></script>
+</body>
+
+</html>

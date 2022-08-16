@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ashion Template">
+    <meta name="keywords" content="Ashion, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title th:if="${category == null}"> Blog | Tủ decor</title>
+    <title th:if="${category != null}" th:text="${category.name}"></title>
+
+    <link rel="icon" type="image/x-icon" href="/images/favicon.png">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/shop-assets/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop-assets/css/style.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <!-- <div id="preloder">
+        <div class="loader"></div>
+    </div> -->
+
+    <th:block th:insert="shop/_header"></th:block>
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="/home"><i class="fa fa-home"></i> Home</a>
+                        <a href="/blog"> Blog</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Blog Section Begin -->
+    <section class="blog spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="blog__item">
+                        <div class="blog__item__pic set-bg" data-setbg="/shop-assets/img/categories/category-1.jpg"></div>
+                        <div class="blog__item__text">
+                            <h6><a href="/blog/5-meo">5 mẹo trang trí nhà cửa giúp bạn hạnh phúc hơn</a></h6>
+                            <ul>
+                                <li>by <span>ttu.decor</span></li>
+                                <li>Aug 08, 2022</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!-- <div class="col-lg-12 text-center">
+                    <a href="#" class="primary-btn load-btn">Load more posts</a>
+                </div> -->
+            </div>
+        </div>
+    </section>
+    <!-- Blog Section End -->
+
+
+    <th:block th:insert="shop/_insta"></th:block>
+    <th:block th:insert="shop/_footer"></th:block>
+
+<!-- Js Plugins -->
+<script src="/shop-assets/js/jquery-3.3.1.min.js"></script>
+<script src="/shop-assets/js/bootstrap.min.js"></script>
+<script src="/shop-assets/js/jquery.magnific-popup.min.js"></script>
+<script src="/shop-assets/js/jquery-ui.min.js"></script>
+<script src="/shop-assets/js/mixitup.min.js"></script>
+<script src="/shop-assets/js/jquery.countdown.min.js"></script>
+<script src="/shop-assets/js/jquery.slicknav.js"></script>
+<script src="/shop-assets/js/owl.carousel.min.js"></script>
+<script src="/shop-assets/js/jquery.nicescroll.min.js"></script>
+<script src="/shop-assets/js/main.js"></script>
+</body>
+
+</html>

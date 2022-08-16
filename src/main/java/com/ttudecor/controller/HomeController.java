@@ -42,5 +42,12 @@ public class HomeController {
 		return "admin/dashboard";
 	}
 	
+	@GetMapping("/about-us")
+	public String aboutUs(Model model) {
+		
+		model.addAttribute("aboutUsPage", true);
+		return "shop/about-us";
+	}
+	
 	
 }
