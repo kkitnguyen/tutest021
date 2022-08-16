@@ -37,7 +37,10 @@ public class CategoryController {
 			model.addAttribute("success", "Thêm danh mục thành công!");
 		else model.addAttribute("message", "Có lỗi xảy ra.");
 		
+		model.addAttribute("categories", categoryService.getAllCategoryDto());
+		model.addAttribute("category", new Category());
 		model.addAttribute("categoryManager", true);
+
 		return "admin/list-categories";
 	}
 	

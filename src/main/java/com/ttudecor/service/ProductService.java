@@ -320,11 +320,9 @@ public class ProductService {
 
 		product.setCreatedTime(LocalDateTime.now());
 		product.setSold(0);
-		product.setUrl("newurl");
-		save(product); //save product first time to get id
-		
-		product = findByUrlEquals("newurl");
-		
+		product.setUrl("");
+		product = save(product); //save product first time to auto generate id
+
 		//Create url of product. Ex: product-name-p001
 		String nameFormat = stringFormatUtils.convertToUrlFomart(product.getName());
 		String idFormat = "p" + String.format("%03d", product.getId());
@@ -336,13 +334,10 @@ public class ProductService {
 		//Save image if image is uploaded: images/products/p001/p001.jpg
 		if(image.getSize() > 0) {
 			String imageSavedName = uploadUtils.uploadImage(image, uploadPath + File.separator + idFormat, idFormat);
-			
-			System.out.println("File separator ---------------------------: " + File.separator);
 			product.setImage("/images/products/" + idFormat + "/" + imageSavedName);
 		}
 		
 		save(product);
-		
 		
 		//--------- Upload gallery
 		//true if gallery is uploaded
@@ -388,11 +383,12 @@ public class ProductService {
 		
 		product.setUrl(url);
 		
+		//Upload image
 		if(image.getSize() > 0) {
 			String imageSavedName = uploadUtils.uploadImage(image, uploadPath + File.separator + idFormat, idFormat);
 			product.setImage("/images/products/" + idFormat + "/" + imageSavedName);
 		}
-		
+
 		save(product);
 		
 		// Upload gallery

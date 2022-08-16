@@ -68,8 +68,10 @@ public class CategoryService {
 		dto.setId(c.getId());
 		dto.setName(c.getName());
 		dto.setUrl(c.getUrl());
-		dto.setNumberOfProduct(c.getProducts().size());
 		
+		if(c.getProducts() != null)
+			dto.setNumberOfProduct(c.getProducts().size());
+		else dto.setNumberOfProduct(0);
 		return dto;
 	}
 	
@@ -77,6 +79,9 @@ public class CategoryService {
 	public boolean AddOrUpdateCategory(Category category) {
 		try {
 			String nameFormat = stringFormatUtils.convertToUrlFomart(category.getName());
+			category.setUrl("");
+			category = save(category); //save first time to auto generate id
+			
 			String idFormat = "c" + String.format("%02d", category.getId());
 			String url = nameFormat + "-" + idFormat;
 			
