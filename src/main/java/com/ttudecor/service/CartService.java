@@ -42,9 +42,9 @@ public class CartService {
 		Collection<CartItemModel> list = gson.fromJson(cartJson, type);
 		Product product = new Product();
 		
+		cart = new HashMap<Integer, CartItemDto>();
+
 		if(list != null) {
-			cart = new HashMap<Integer, CartItemDto>();
-			
 			for(CartItemModel item : list) {
 				product = productService.findProductById(item.getProductId());
 				
