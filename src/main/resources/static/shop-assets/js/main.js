@@ -246,7 +246,7 @@ for(var i = 0; i < collection.length ; i++){
 
 
 $(document).ready(function(){
-    $.get('http://192.168.6.222:8080/cart/amount', {},function(data){
+    $.get('https://ttudecor.store/cart/amount', {},function(data){
         //alert(data);
         if(data > 0) $('#cartAmount').text(data);
         else $('#cartAmount').remove();
